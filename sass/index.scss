@@ -1,0 +1,31 @@
+
+/*  MISC */
+@import "./misc/variables";
+@import "./misc/normalize";
+@import "./misc/mixins";
+
+/*  MPARTIALS */
+@import "./partials/header";
+@import "./partials/footer";
+
+
+
+/*  VIEWS */
+@import "./views/home";
+@import "./views/como";
+@import "./views/catalogo";
+@import "./views/comercios";
+@import "./views/canjear";
+@import "./views/contacto";
+
+/*Mediaqueries */
+@import "./misc/mediaqueries.scss";
+
+
+/* Animación del #offers__tit  */
+
+@keyframes shrink-me {
+    0%   {margin: 0 1rem; font-size: 28;}
+    50%  {margin: 0 4rem; font-size: 14;}
+    100% {margin: 0 1rem; font-size: 28;}
+}

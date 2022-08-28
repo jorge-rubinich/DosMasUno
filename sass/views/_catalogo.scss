@@ -1,0 +1,64 @@
+.catalogo {
+    @include cajaredondeada(300px, 60px, $color-base, 5%)
+}
+
+.catlateral {
+    height: 100vh;
+}
+
+.listacatalogo {
+    @include flex(column,flex-start, stretch, map-get($spacings,'xsmall') );
+
+}
+
+.catalogoitem {
+    @include flex(row,flex-start, stretch, map-get($spacings,'xsmall') );
+    padding: map-get($spacings,'xsmall');
+    border-bottom: 1px solid lightgray;
+
+    .item_imagencontainer {
+        width: 20%;
+        .item_imagen { max-width: 100%;
+        }
+    }
+
+    .item_descripcion {
+        width: 75%;
+        margin-left: 1rem;
+        @include flex(column,flex-start, stretch, map-get($spacings,'xsmall') );
+        h4 {
+            font-family: $font-Product;
+            margin-bottom: 0;
+        }
+        .precioanterior {
+            font-size: $text-small;
+            color: gray;
+            text-decoration: line-through;
+
+        }
+        .precio {
+            font-size: $text-medium;
+            margin: 0;
+        }
+        .canjear {
+            color: white;
+            text-decoration: double;
+            font-size: $text-medium;
+            font-family: $font-principal;
+
+            a { 
+                text-decoration: none;
+                color: none;    
+            }
+        }
+
+        
+    }
+}
+
+.catalogoitem:hover {
+    background-color: rgb(220, 242, 250);
+    .canjear {
+        color: green;
+    }
+}

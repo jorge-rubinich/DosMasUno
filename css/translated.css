@@ -1,0 +1,246 @@
+@charset "UTF-8";
+/*  MISC */
+/* Colors  */
+/* Spacings - Espaciados */
+/* Creo clases utilitarias pad-xxx */
+.pad-large {
+  padding: 6rem; }
+
+.pad-medium {
+  padding: 3rem; }
+
+.pad-small {
+  padding: 2rem; }
+
+.pad-xsmall {
+  padding: 1rem; }
+
+/* Font Family */
+/* Font sizes */
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box; }
+
+h1 {
+  color: #E63462;
+  margin: 2rem 0; }
+
+.nav-item {
+  margin-bottom: 1rem; }
+
+/*  MPARTIALS */
+.nav-item {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 6px 20px;
+  margin-left: 10px;
+  background-color: #0093ff;
+  color: white; }
+  .nav-item a {
+    color: white;
+    text-decoration: none; }
+
+.footerbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: self-start;
+  align-items: stretch;
+  gap: 1rem; }
+
+.footermenu {
+  list-style-type: none; }
+
+/*  VIEWS */
+#tarjetas {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem; }
+  #tarjetas .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0.5rem;
+    background-color: #C7EFCF;
+    flex-basis: 25%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 250px;
+    transition: transform .7s; }
+    #tarjetas .card:hover {
+      transform: scale(1.1, 1.1); }
+    #tarjetas .card .pasos__titulo {
+      color: #333745;
+      font-size: 24px;
+      font-family: "Libre Baskerville", serif;
+      margin: 5px; }
+    #tarjetas .card .pasos__subtitulo {
+      color: #E63462;
+      font-size: 20px;
+      font-family: "Libre Baskerville", serif;
+      margin: 5px; }
+
+#offers__tit {
+  border: 2px solid #333745;
+  font-size: 40;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 5px 0;
+  text-align: center;
+  background-image: linear-gradient(to bottom, yellow, red, yellow);
+  animation-name: shrink-me;
+  animation-duration: 5s;
+  animation-iteration-count: 10;
+  animation-delay: 3s;
+  /* transition: border 3s; */ }
+
+#offers {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem; }
+  #offers .card {
+    padding: 5px;
+    margin: 5px;
+    flex-basis: 25%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 280px;
+    max-width: 400px; }
+    #offers .card .precio {
+      text-align: end; }
+
+/* -- Pagina Como */
+.callout-info {
+  margin: 2rem;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+  border-left-color: #5bc0de; }
+  .callout-info h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #5bc0de; }
+
+.catalogo {
+  width: 300px;
+  height: 60px;
+  background-color: #C7EFCF;
+  border-radius: 5%;
+  text-align: center;
+  margin: 0.5rem; }
+
+.catlateral {
+  height: 100vh; }
+
+.listacatalogo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem; }
+
+.catalogoitem {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid lightgray; }
+  .catalogoitem .item_imagencontainer {
+    width: 20%; }
+    .catalogoitem .item_imagencontainer .item_imagen {
+      max-width: 100%; }
+  .catalogoitem .item_descripcion {
+    width: 75%;
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 1rem; }
+    .catalogoitem .item_descripcion h4 {
+      font-family: "Roboto", sans-serif;
+      margin-bottom: 0; }
+    .catalogoitem .item_descripcion .precioanterior {
+      font-size: 1em;
+      color: gray;
+      text-decoration: line-through; }
+    .catalogoitem .item_descripcion .precio {
+      font-size: 1.5em;
+      margin: 0; }
+    .catalogoitem .item_descripcion .canjear {
+      color: white;
+      text-decoration: double;
+      font-size: 1.5em;
+      font-family: "Verdana, Geneva, Tahoma", sans-serif; }
+      .catalogoitem .item_descripcion .canjear a {
+        text-decoration: none;
+        color: none; }
+
+.catalogoitem:hover {
+  background-color: #dcf2fa; }
+  .catalogoitem:hover .canjear {
+    color: green; }
+
+/* -- Pagina Comercios */
+.comercios .card {
+  gap: 0.2rem;
+  flex-basis: 30%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 250px;
+  max-width: 33%; }
+
+.comercios .logo_comercio {
+  margin: 1rem;
+  width: 60%;
+  align-self: center; }
+
+.contacto {
+  margin: 20px auto;
+  width: 400px;
+  /* Esquema del formulario */
+  padding: 1rem;
+  border: 1px solid #C7EFCF;
+  border-radius: 1em;
+  font-family: "Verdana, Geneva, Tahoma", sans-serif; }
+  .contacto ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; }
+  .contacto input, .contacto .contacto textarea {
+    font: 12px Verdana;
+    border: 1px solid #999; }
+  .contacto textarea {
+    width: 350px;
+    height: 120px; }
+
+/*Mediaqueries */
+@media (max-width: 720px) {
+  .logo {
+    max-width: 200; }
+  .catlateral {
+    height: 100%; }
+  .contacto {
+    width: 300px; }
+    .contacto textarea {
+      width: 260px; } }
+
+/* Animación del #offers__tit  */
+@keyframes shrink-me {
+  0% {
+    margin: 0 1rem;
+    font-size: 28; }
+  50% {
+    margin: 0 4rem;
+    font-size: 14; }
+  100% {
+    margin: 0 1rem;
+    font-size: 28; } }

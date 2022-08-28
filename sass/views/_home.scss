@@ -1,0 +1,64 @@
+#tarjetas {
+    @include flex(row,flex-start, stretch, map-get($spacings,'xsmall') );
+    
+    .card {
+        @include flex(column,flex-start, stretch, map-get($spacings,'xsmall')/2 );
+        background-color: $color-base;
+        flex-basis: 25%;
+        flex-grow: 1;
+        flex-shrink: 1;
+        min-width: 250px;
+        transition: transform .7s;
+
+        &:hover {transform: scale(1.1, 1.1)}  
+        
+        .pasos__titulo {color: $color-primary;  font-size: 24px;
+            font-family: $font-title;
+            margin: 5px}
+
+        .pasos__subtitulo {color: $color-secondary; font-size: 20px;
+            font-family: $font-title;
+            margin: 5px}
+
+        .pasos__img {}
+    }
+
+}
+
+#offers__tit {border: 2px solid $color-primary;
+    font-size: 40;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 10px 15px;
+    margin: 5px 0;
+    text-align: center;
+    background-image: linear-gradient(to bottom, yellow, red, yellow);
+    animation-name: shrink-me;
+    animation-duration: 5s;
+    animation-iteration-count: 10;
+    animation-delay: 3s;
+    /* transition: border 3s; */
+}
+
+
+#offers {
+    @include flex(row,flex-start, stretch, map-get($spacings,'xsmall') );
+
+    .card {
+        padding: 5px;
+        margin: 5px;
+        flex-basis: 25%;
+        flex-grow: 1;
+        flex-shrink: 1;
+        min-width: 280px;
+        max-width: 400px;
+
+        .precio {
+            text-align: end;
+        }
+    }
+
+}
+
+
+

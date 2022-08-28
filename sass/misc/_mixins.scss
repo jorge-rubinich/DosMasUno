@@ -1,0 +1,18 @@
+
+@mixin flex($dir, $jus, $alg, $gap) {
+    display: flex;
+    flex-direction: $dir;
+    justify-content: $jus;
+    align-items: $alg;
+    gap: $gap;
+}
+
+@mixin cajaredondeada($width, $height, $color,$radius: 5%) {
+    width: $width;
+    height: $height;
+    background-color: $color;
+    border-radius: $radius;
+    text-align: center;
+    margin: map-get($spacings, 'xsmall' )/2;
+}
+

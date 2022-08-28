@@ -1,0 +1,8 @@
+.footerbox {
+    @include flex(column, self-start, stretch, map-get($spacings,'xsmall'));
+    
+}
+
+.footermenu {
+    list-style-type: none;
+}

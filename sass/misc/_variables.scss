@@ -1,0 +1,40 @@
+/* Colors  */
+$color-primary: #333745;
+$color-secondary: #E63462;
+$color-alternate: #FE5F55;
+$color-text:  #333745;
+$color-base: #C7EFCF;
+
+
+/* Spacings - Espaciados */
+$spacing-large:  6rem;
+$spacing-medium: 3rem;
+$spacing-small:  2rem;
+$spacing-xsmall: 1rem;
+
+/* Creo clases utilitarias pad-xxx */
+$spacings:(
+    large:  6rem,
+    medium: 3rem,
+    small:  2rem,
+    xsmall: 1rem,
+);
+
+@each $tipo, $val in $spacings{
+    .pad-#{$tipo} {
+        padding: #{$val}
+    }
+}
+
+/* Font Family */
+$font-principal: 'Verdana, Geneva, Tahoma', sans-serif;
+$font-title: 'Libre Baskerville', serif;
+$font-Product: 'Roboto', sans-serif;
+
+/* Font sizes */
+$text-large:  3.0em;
+$text-medium: 1.5em;
+$text-base: 1.2em;
+$text-small:  1.0em;
+
+
