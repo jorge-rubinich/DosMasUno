@@ -21,11 +21,14 @@ class Articulo {
     }
 }
 
+function comprar (item){
+    alert(`Take it easy, bro, take it easy! \n Quieres comprar el articulo *${lista[item].nombre}*. Gracias. Pronto podras hacerlo. Paciencia!`);
+}
 
 function inicio() {
 
     // Creo la lista de Productos.. En un futuro se leerán  de una DB
-    const lista= [];
+
     desc="Pulseras plásticas para eventos, a prueba de agua. Podes personalizarlas a tu gusto.";
     arti1= new Articulo(1045,"Pulseras para eventos",desc,100,1200,500,20,"pulseras.svg");
     desc="Promociona tu negocio o emprendimientos con llaveros cinta full color." ;  
@@ -44,12 +47,18 @@ function inicio() {
         // recorro los objetos creados ..
         idnumber=i+1;
 
-        cardText= `${cardText}<article  class='card col p-2'> <img src='${lista[i].imagen}'alt='' class='artImg'>`;
-        cardText= `${cardText} <h4 class='artNombre'>${lista[i].nombre}</h4> <h6 class='artDescri'>${lista[i].descripcion}</h6><p class='artPrecio'>Precio Pack x ${lista[i].pack}: \$${lista[i].precio}</p><p class='artDesc'>Mas de ${lista[i].topeDescuento} unid. ${lista[i].descuento}% Descuento</p> </article>`;
+        cardText= `${cardText}<article  class='card col p-2'>
+         <img src='${lista[i].imagen}'alt='' class='artImg'>
+        <h4 class='artNombre'>${lista[i].nombre}</h4> <h6 class='artDescri'>${lista[i].descripcion}</h6>
+        <p class='artPrecio'>Precio Pack x ${lista[i].pack}: \$${lista[i].precio}</p>
+        <p class='artDesc'>Mas de ${lista[i].topeDescuento} unid. ${lista[i].descuento}% Descuento</p>
+        <button class="botonComprar" type="button" onClick="comprar(${i})">Comprar</button>
+        </article>`;
     }
 
     document.getElementById("tarjetas").innerHTML= cardText;
 }
 
-/* window.onload= init(); */
+// Defino el array a usar
+const lista= [];
 inicio(); 
