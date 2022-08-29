@@ -1,10 +1,11 @@
-#tarjetas {
+#listaProductos{
     @include flex(row,flex-start, stretch, map-get($spacings,'xsmall') );
     
     .card {
         @include flex(column,flex-start, stretch, map-get($spacings,'xsmall')/2 );
 
         background-color: $color-base;
+        /* font-family: $font-principal; */
         flex-basis: 15%;
         flex-grow: 1;
         flex-shrink: 1;
@@ -19,35 +20,68 @@
         }
         .artDescri {
             color: blue;
+            min-height: 60px;
         }
         .artPrecio {
             background-color: aqua;
+            align-self: end;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .artDesc{
+            align-self: end;
+            margin-top: 0;
+            padding-top: 0;
         }
         
-        .botonComprar {
-            border: 0;
-            line-height: 2.5;
-            padding: 0 20px;
-            font-size: 1rem;
-            text-align: center;
-            color: #fff;
-            text-shadow: 1px 1px 1px #000;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 220, 1);
-            background-image: linear-gradient(to top left,
-                                              rgba(0, 0, 0, .2),
-                                              rgba(0, 0, 0, .2) 30%,
-                                              rgba(0, 0, 0, 0));
-            box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
-                        inset -2px -2px 3px rgba(0, 0, 0, .6);
-        }
-        .botonComprar:hover {
-                background-color: rgba(0, 0,255, 1);
-        }
+
         
     }
 }
 
+.botonComprar{
+    border: 0;
+    line-height: 2.3;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 220, 1);
+    background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+    width: 130px;
+    align-self: end;
+}
+.botonComprar:hover {
+        background-color: rgba(0, 0,255, 1);
+}
+
+.botonEnviar {
+    @extend .botonComprar;
+    width: 150px;
+    align-items: end;
+}
+
+
+#pedido {
+
+    #titulo {
+        background-color: $color-primary;
+        color: $color-base;
+        text-align: center;
+        font-family: $font-title;
+    }
+    #cuerpo {
+        background-color: $color-base;
+        text-align: center;
+    }
+}
 
 
 

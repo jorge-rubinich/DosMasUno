@@ -64,19 +64,20 @@ html {
     .contacto textarea {
       width: 260px; } }
 
-#tarjetas {
+#listaProductos {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: stretch;
   gap: 1rem; }
-  #tarjetas .card {
+  #listaProductos .card {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     gap: 0.5rem;
     background-color: #C7EFCF;
+    /* font-family: $font-principal; */
     flex-basis: 15%;
     flex-grow: 1;
     flex-shrink: 1;
@@ -84,23 +85,49 @@ html {
     max-width: 330px;
     transition: transform .7s;
     /*         &:hover {transform: scale(1.1, 1.1)}   */ }
-    #tarjetas .card img {
+    #listaProductos .card img {
       padding: 1 rem; }
-    #tarjetas .card .artDescri {
-      color: blue; }
-    #tarjetas .card .artPrecio {
-      background-color: aqua; }
-    #tarjetas .card .botonComprar {
-      border: 0;
-      line-height: 2.5;
-      padding: 0 20px;
-      font-size: 1rem;
-      text-align: center;
-      color: #fff;
-      text-shadow: 1px 1px 1px #000;
-      border-radius: 10px;
-      background-color: #0000dc;
-      background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
-      box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6); }
-    #tarjetas .card .botonComprar:hover {
-      background-color: blue; }
+    #listaProductos .card .artDescri {
+      color: blue;
+      min-height: 60px; }
+    #listaProductos .card .artPrecio {
+      background-color: aqua;
+      align-self: end;
+      margin-bottom: 0;
+      padding-bottom: 0; }
+    #listaProductos .card .artDesc {
+      align-self: end;
+      margin-top: 0;
+      padding-top: 0; }
+
+.botonComprar, .botonEnviar {
+  border: 0;
+  line-height: 2.3;
+  padding: 0 20px;
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  background-color: #0000dc;
+  background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+  box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+  width: 130px;
+  align-self: end; }
+
+.botonComprar:hover, .botonEnviar:hover {
+  background-color: blue; }
+
+.botonEnviar {
+  width: 150px;
+  align-items: end; }
+
+#pedido #titulo {
+  background-color: #333745;
+  color: #C7EFCF;
+  text-align: center;
+  font-family: "Libre Baskerville", serif; }
+
+#pedido #cuerpo {
+  background-color: #C7EFCF;
+  text-align: center; }
