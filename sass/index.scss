@@ -1,31 +1,19 @@
 
 /*  MISC */
-@import "./misc/variables";
-@import "./misc/normalize";
-@import "./misc/mixins";
+@import "./misc/_variables";
+@import "./misc/_normalize";
+@import "./misc/_mixins";
 
 /*  MPARTIALS */
-@import "./partials/header";
-@import "./partials/footer";
+@import "./partials/_header";
+@import "./partials/_footer";
 
 
 
 /*  VIEWS */
-@import "./views/home";
-@import "./views/como";
-@import "./views/catalogo";
-@import "./views/comercios";
-@import "./views/canjear";
-@import "./views/contacto";
+/* @import "./views/xxx";
+@import "./views/yyy";
 
 /*Mediaqueries */
 @import "./misc/mediaqueries.scss";
-
-
-/* Animación del #offers__tit  */
-
-@keyframes shrink-me {
-    0%   {margin: 0 1rem; font-size: 28;}
-    50%  {margin: 0 4rem; font-size: 14;}
-    100% {margin: 0 1rem; font-size: 28;}
-}
+@import "./views/_home.scss";

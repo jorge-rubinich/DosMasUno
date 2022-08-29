@@ -1,0 +1,92 @@
+/*  MISC */
+/* Colors  */
+/* Spacings - Espaciados */
+/* Creo clases utilitarias pad-xxx */
+.pad-large {
+  padding: 6rem; }
+
+.pad-medium {
+  padding: 3rem; }
+
+.pad-small {
+  padding: 2rem; }
+
+.pad-xsmall {
+  padding: 1rem; }
+
+/* Font Family */
+/* Font sizes */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box; }
+
+html {
+  font-size: 62,5%;
+  color: #FE5F55; }
+
+/*  MPARTIALS */
+.nav-item {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 6px 20px;
+  margin-left: 10px;
+  background-color: #0093ff;
+  color: white; }
+  .nav-item a {
+    color: white;
+    text-decoration: none; }
+
+.footerbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: self-start;
+  align-items: stretch;
+  gap: 1rem; }
+
+.footermenu {
+  list-style-type: none; }
+
+/*  VIEWS */
+/* @import "./views/xxx";
+@import "./views/yyy";
+
+/*Mediaqueries */
+@media (max-width: 720px) {
+  .logo {
+    max-width: 200; }
+  .catlateral {
+    height: 100%; }
+  .contacto {
+    width: 300px; }
+    .contacto textarea {
+      width: 260px; } }
+
+#tarjetas {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 1rem; }
+  #tarjetas .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0.5rem;
+    background-color: #C7EFCF;
+    flex-basis: 15%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 250px;
+    max-width: 330px;
+    transition: transform .7s;
+    /*         &:hover {transform: scale(1.1, 1.1)}   */ }
+    #tarjetas .card img {
+      padding: 1 rem; }
+    #tarjetas .card .artDescri {
+      color: blue; }
+    #tarjetas .card .artPrecio {
+      background-color: aqua; }

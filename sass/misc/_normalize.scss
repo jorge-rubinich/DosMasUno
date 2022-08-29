@@ -1,14 +1,12 @@
-* {margin:0;
+*,
+*::before,
+*::after {margin:0;
     padding: 0;
     list-style: none;
     box-sizing: border-box;
 }
 
-h1 {
-    color:$color-secondary;
-    margin: $spacing-small 0;
-    }
-
-.nav-item {
-    margin-bottom: 1rem;
-} 
+html {
+    font-size: 62,5%;
+    color: $color-alternate;
+}
