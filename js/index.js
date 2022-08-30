@@ -8,6 +8,7 @@ class Articulo {
         this.topeDescuento= topeDescuento;
         this.descuento= descuento;
         this.imagen= "./imgs/"+imagen;
+        this.cantidad=0;
     }
 
     devolverPrecio (cantidad){
@@ -22,18 +23,50 @@ class Articulo {
 }
 
 function agregarCarrito (item){
-    // agrego el item a la lista de Pedido por ahora..
-    pedido.push(lista[item]);
+    // Busco si ya lo tengo.
+    i=0;
+    var itemyapedido=false;
+    if (pedido.length>0){
+        while (i<pedido.length){
+            if (pedido[i].codigo===lista[item].codigo){
+                itemyapedido=true;
+                break;
+            }
+            i++;      
+        }
+    }
+
+    if (!itemyapedido){
+        // agrego un nuevo producto
+        pedido.push(lista[item]);
+        i=pedido.length-1;
+    }
+
+
+    // aumento cantidad en 1
+    pedido[i].cantidad= pedido[i].cantidad +1;
     mostrarCarrito();
 }
 
 function mostrarCarrito(){
-    pedidoHTML=""
+    pedidoHTML=`<article id="tituloPedido" class="row">
+    <div class="col-sm-1 itemCodigo">Código</div>
+    <div class="col-sm-1 itemCantidad">Cantidad</div>
+    <div class="col-sm-5 itemNombre">Producto Pedido</div>
+    <div class="col-sm-2 itemPrecio">Precio Final</div>
+    </article>`;
     for (i=0; i<pedido.length;i++){
         // recorro el array pedido..  ..
-        pedidoHTML= `${pedidoHTML}<article>${pedido[i].nombre}
+        pedidoHTML= `${pedidoHTML}<article class="row itemPedido">
+            <div class="col-sm-1 itemCodigo">${pedido[i].codigo}</div>
+            <div class="col-sm-1 itemCantidad">${pedido[i].cantidad}</div>
+            <div class="col-sm-5 itemNombre">${pedido[i].nombre}</div>
+            <div class="col-sm-2 itemPrecio">${pedido[i].precio}</div>
+        </article>`
+
+/*         <article>
         </article>`;
-    }
+ */    }
     if (pedido.length>0){
         // tengo algo cargado. Muestro botón enviar pedido
         pedidoHTML= `${pedidoHTML}<article>
@@ -59,7 +92,7 @@ function leoDB() {
     desc="Tazas para promoción. Forma y color a elección";
     arti4= new Articulo(3547,"Porros de Marihuana",desc,2,3000,10,30,"llaveros.svg");
     desc="Promociona tu negocio o emprendimientos con llaveros cinta full color." ;
-    arti5= new Articulo(1234,"Folletos tamaño A5",desc,1000,3500,5000,25,"entradas.svg")
+    arti5= new Articulo(1238,"Folletos tamaño A5",desc,1000,3500,5000,25,"entradas.svg")
 
     lista.push(arti0, arti1, arti2, arti3,arti4,arti5);
 }

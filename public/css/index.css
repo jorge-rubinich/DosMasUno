@@ -122,12 +122,20 @@ html {
   width: 150px;
   align-items: end; }
 
-#pedido #titulo {
-  background-color: #333745;
-  color: #C7EFCF;
-  text-align: center;
-  font-family: "Libre Baskerville", serif; }
+#pedido {
+  max-width: 700; }
+  #pedido #titulo {
+    background-color: #333745;
+    color: #C7EFCF;
+    text-align: center;
+    font-family: "Libre Baskerville", serif; }
+  #pedido #cuerpo {
+    background-color: #C7EFCF;
+    text-align: center; }
+    #pedido #cuerpo #tituloPedido {
+      background-color: blue;
+      color: yellowgreen; }
 
-#pedido #cuerpo {
-  background-color: #C7EFCF;
-  text-align: center; }
+.itemPedido {
+  max-width: 700;
+  align-items: center; }

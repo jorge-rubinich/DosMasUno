@@ -71,18 +71,27 @@
 
 #pedido {
 
+    max-width: 700;
     #titulo {
         background-color: $color-primary;
         color: $color-base;
         text-align: center;
         font-family: $font-title;
+
     }
     #cuerpo {
         background-color: $color-base;
         text-align: center;
+        #tituloPedido {
+            background-color: blue;
+            color: yellowgreen;
+        }
     }
 }
 
-
+.itemPedido {
+    max-width: 700;
+    align-items: center;
+}
 
 
