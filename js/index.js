@@ -62,6 +62,8 @@ function mostrarCarrito(){
             <div class="col-sm-1 itemCantidad">${pedido[i].cantidad}</div>
             <div class="col-sm-5 itemNombre">${pedido[i].nombre}</div>
             <div class="col-sm-2 itemPrecio">${pedido[i].precio}</div>
+            <div class="col-sm-2 itemBorrar"><button type="button" class="btnEliminar" onClick="BorrarItem(${pedido[i].codigo})"><img src="./imgs/papelera.png"></button>
+            
         </article>`
 
 /*         <article>

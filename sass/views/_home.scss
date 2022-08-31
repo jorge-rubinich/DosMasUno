@@ -13,7 +13,7 @@
         max-width: 330px;
         transition: transform .7s; 
 
-/*         &:hover {transform: scale(1.1, 1.1)}   */
+/*    &:hover {transform: scale(1.1, 1.1)}   */
 
         img {
             padding: 1 rem;
@@ -68,23 +68,32 @@
     align-items: end;
 }
 
+.btnEliminarx {
+    width: 20px;
+    height: 20px;
+    align-items: end;
+}
 
-#pedido {
 
-    max-width: 700;
-    #titulo {
-        background-color: $color-primary;
-        color: $color-base;
-        text-align: center;
-        font-family: $font-title;
+#pedidoContainer {
+    display: flex;
+    #pedido {
+        width: 700px;
+        align-self: center;
+        #titulo {
+            background-color: $color-primary;
+            color: $color-base;
+            text-align: center;
+            font-family: $font-title;
 
-    }
-    #cuerpo {
-        background-color: $color-base;
-        text-align: center;
-        #tituloPedido {
-            background-color: blue;
-            color: yellowgreen;
+        }
+        #cuerpo {
+            background-color: $color-base;
+            align-items: center;
+            #tituloPedido {
+                background-color: blue;
+                color: yellowgreen;
+            }
         }
     }
 }

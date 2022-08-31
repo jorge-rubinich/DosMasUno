@@ -84,7 +84,7 @@ html {
     min-width: 250px;
     max-width: 330px;
     transition: transform .7s;
-    /*         &:hover {transform: scale(1.1, 1.1)}   */ }
+    /*    &:hover {transform: scale(1.1, 1.1)}   */ }
     #listaProductos .card img {
       padding: 1 rem; }
     #listaProductos .card .artDescri {
@@ -122,19 +122,27 @@ html {
   width: 150px;
   align-items: end; }
 
-#pedido {
-  max-width: 700; }
-  #pedido #titulo {
-    background-color: #333745;
-    color: #C7EFCF;
-    text-align: center;
-    font-family: "Libre Baskerville", serif; }
-  #pedido #cuerpo {
-    background-color: #C7EFCF;
-    text-align: center; }
-    #pedido #cuerpo #tituloPedido {
-      background-color: blue;
-      color: yellowgreen; }
+.btnEliminarx {
+  width: 20px;
+  height: 20px;
+  align-items: end; }
+
+#pedidoContainer {
+  display: flex; }
+  #pedidoContainer #pedido {
+    width: 700px;
+    align-self: center; }
+    #pedidoContainer #pedido #titulo {
+      background-color: #333745;
+      color: #C7EFCF;
+      text-align: center;
+      font-family: "Libre Baskerville", serif; }
+    #pedidoContainer #pedido #cuerpo {
+      background-color: #C7EFCF;
+      align-items: center; }
+      #pedidoContainer #pedido #cuerpo #tituloPedido {
+        background-color: blue;
+        color: yellowgreen; }
 
 .itemPedido {
   max-width: 700;
