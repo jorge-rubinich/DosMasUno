@@ -73,8 +73,6 @@
     height: 20px;
     align-items: end;
 }
-
-
 #pedidoContainer {
     display: flex;
     gap: 5px;
@@ -102,10 +100,12 @@
 
 .itemPedido {
     max-width: 700;
+    padding-left: 2px;
+    padding-right: 2px;
     align-items: center;
 }
 
-.itemCantidad, itemPrecio {
-    align-self: right;
+.itemCantidad, .itemPrecio {
+    align-content: right;
 }
 

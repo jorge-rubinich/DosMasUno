@@ -40,9 +40,9 @@ function agregarCarrito (item){
 function mostrarCarrito(){
     pedidoHTML=`<article id="tituloPedido" class="row">
     <div class="col-sm-1 itemCodigo">Código</div>
-    <div class="col-sm-2 itemCantidad">Cant</div>
+    <div class="col-sm-1 itemCantidad  text-end">Cant</div>
     <div class="col-sm-6 itemNombre">Producto Pedido</div>
-    <div class="col-sm-2 itemPrecio">Precio Final</div>
+    <div class="col-sm-3 itemPrecio  text-end">Precio Final</div>
     <div class="col-sm-1 itemBorrar"></div>
     
     </article>`;
@@ -50,9 +50,9 @@ function mostrarCarrito(){
         // recorro el array pedido..  ..
         pedidoHTML= `${pedidoHTML}<article class="row itemPedido">
             <div class="col-sm-1 itemCodigo">${pedido[i].codigo}</div>
-            <div class="col-sm-2 itemCantidad">${pedido[i].cantidad}</div>
+            <div class="col-sm-1 itemCantidad text-end">${pedido[i].cantidad}</div>
             <div class="col-sm-6 itemNombre">${pedido[i].nombre}</div>
-            <div class="col-sm-2 itemPrecio">${pedido[i].precio}</div>
+            <div class="col-sm-3 itemPrecio text-end">${pedido[i].precio}</div>
             <div class="col-sm-1 itemBorrar"><button type="button" class="btnEliminar" onClick="borrarItem(${i})"><img src="./imgs/papelera.png"></button>
             
         </article>`
