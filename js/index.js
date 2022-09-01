@@ -24,45 +24,36 @@ class Articulo {
 
 function agregarCarrito (item){
     // Busco si ya lo tengo.
-    i=0;
-    var itemyapedido=false;
-    if (pedido.length>0){
-        while (i<pedido.length){
-            if (pedido[i].codigo===lista[item].codigo){
-                itemyapedido=true;
-                break;
-            }
-            i++;      
-        }
-    }
+    index= pedido.indexOf(lista[item])
 
-    if (!itemyapedido){
+    if (index===-1){
         // agrego un nuevo producto
         pedido.push(lista[item]);
-        i=pedido.length-1;
+        // pongo index en la posición del producto agregado
+        index=pedido.length-1;
     }
-
-
     // aumento cantidad en 1
-    pedido[i].cantidad= pedido[i].cantidad +1;
+    pedido[index].cantidad= pedido[index].cantidad +1;
     mostrarCarrito();
 }
 
 function mostrarCarrito(){
     pedidoHTML=`<article id="tituloPedido" class="row">
     <div class="col-sm-1 itemCodigo">Código</div>
-    <div class="col-sm-1 itemCantidad">Cantidad</div>
-    <div class="col-sm-5 itemNombre">Producto Pedido</div>
+    <div class="col-sm-2 itemCantidad">Cant</div>
+    <div class="col-sm-6 itemNombre">Producto Pedido</div>
     <div class="col-sm-2 itemPrecio">Precio Final</div>
+    <div class="col-sm-1 itemBorrar"></div>
+    
     </article>`;
     for (i=0; i<pedido.length;i++){
         // recorro el array pedido..  ..
         pedidoHTML= `${pedidoHTML}<article class="row itemPedido">
             <div class="col-sm-1 itemCodigo">${pedido[i].codigo}</div>
-            <div class="col-sm-1 itemCantidad">${pedido[i].cantidad}</div>
-            <div class="col-sm-5 itemNombre">${pedido[i].nombre}</div>
+            <div class="col-sm-2 itemCantidad">${pedido[i].cantidad}</div>
+            <div class="col-sm-6 itemNombre">${pedido[i].nombre}</div>
             <div class="col-sm-2 itemPrecio">${pedido[i].precio}</div>
-            <div class="col-sm-2 itemBorrar"><button type="button" class="btnEliminar" onClick="BorrarItem(${pedido[i].codigo})"><img src="./imgs/papelera.png"></button>
+            <div class="col-sm-1 itemBorrar"><button type="button" class="btnEliminar" onClick="borrarItem(${i})"><img src="./imgs/papelera.png"></button>
             
         </article>`
 
@@ -116,6 +107,12 @@ listaHTML=""
     }
 
     document.getElementById("listaProductos").innerHTML= listaHTML;
+}
+
+function borrarItem(item){
+/*     alert("borrando articulo "+pedido[item].nombre); */
+    pedido.splice(item,1);
+    mostrarCarrito();
 }
 
 // Defino array para lista de produtos a mostrar

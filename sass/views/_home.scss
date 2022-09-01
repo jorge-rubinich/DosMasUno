@@ -77,9 +77,11 @@
 
 #pedidoContainer {
     display: flex;
+    gap: 5px;
     #pedido {
-        width: 700px;
+        width: 600px;
         align-self: center;
+        margin: auto;
         #titulo {
             background-color: $color-primary;
             color: $color-base;
@@ -103,4 +105,7 @@
     align-items: center;
 }
 
+.itemCantidad, itemPrecio {
+    align-self: right;
+}
 

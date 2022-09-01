@@ -128,10 +128,12 @@ html {
   align-items: end; }
 
 #pedidoContainer {
-  display: flex; }
+  display: flex;
+  gap: 5px; }
   #pedidoContainer #pedido {
-    width: 700px;
-    align-self: center; }
+    width: 600px;
+    align-self: center;
+    margin: auto; }
     #pedidoContainer #pedido #titulo {
       background-color: #333745;
       color: #C7EFCF;
@@ -147,3 +149,6 @@ html {
 .itemPedido {
   max-width: 700;
   align-items: center; }
+
+.itemCantidad, itemPrecio {
+  align-self: right; }
