@@ -4,7 +4,7 @@ class Articulo {
         this.nombre= nombre;
         this.descripcion=descripcion;
         this.pack= pack;
-        this.precio= precio;
+        this.precio= precio.toFixed(0);
         this.topeDescuento= topeDescuento;
         this.descuento= descuento;
         this.imagen= "./imgs/"+imagen;
@@ -22,27 +22,65 @@ class Articulo {
     }
 }
 
-function agregarCarrito (item){
-    // Busco si ya lo tengo.
-    index= pedido.indexOf(lista[item])
-
-    if (index===-1){
-        // agrego un nuevo producto
-        pedido.push(lista[item]);
-        // pongo index en la posición del producto agregado
-        index=pedido.length-1;
+class Carrito {
+    constructor (codigo,nombre,pack,precio,topeDescuento,descuento) {
+        this.codigo= codigo;
+        this.nombre= nombre;
+        this.precioBase= precio;
+        this.pack= pack;
+        this.precioUnit=0;
+        this.total= 0;
+        this.cantidad= 0;
+        this.topeDescuento=topeDescuento;
+        this.descuento= descuento;
     }
-    // aumento cantidad en 1
-    pedido[index].cantidad= pedido[index].cantidad +1;
+
+    comprar(cantidadComprada){
+        this.cantidad= this.cantidad+ cantidadComprada;
+        this.precioUnit= this.precioBase;
+        if (this.cantidad*this.pack>=this.topeDescuento){
+            this.precioUnit= this.precioBase - this.precioBase/100*this.descuento;
+        }
+        this.total= this.cantidad* this.precioUnit;
+    }
+}
+
+function agregarCarrito (codSolicitado){
+    let index=0;
+    // localizo el codigo en lista[], necesito sus datos para copiar.
+    let codEnLista = lista.find(item => item.codigo===codSolicitado);
+    if (codEnLista===undefined){
+        // si el codigo no esta en la lista-> Algo grave ocurrió.
+        ALERT("Apa! Algo salió mal. Vuelva a intentarlo, por favor");
+        // aca deberia loguear el error e informarlo .
+    }else{
+        // Tengo el codigo. Busco si ya lo tengo cargado en el carrito.
+        let codEnPedido= pedido.find(item => item.codigo===codSolicitado);
+        if (codEnPedido===undefined){
+            // El find no fue exitoso. debo agregar el producto al carrito.
+            pedido.push(new Carrito(codEnLista.codigo,codEnLista.nombre,codEnLista.pack,codEnLista.precio,
+                codEnLista.topeDescuento,codEnLista.descuento));
+            // como es un nuevo elemento, index es longitud -1
+            index=pedido.length-1;
+        } else {
+            // Lo encontre. Uso codEnPedido para encontrar la posicion en el array
+            index=pedido.indexOf(codEnPedido);
+        }
+    }
+    // aumento cantidad en (por ahora 1)
+    pedido[index].comprar(1);
     mostrarCarrito();
 }
 
 function mostrarCarrito(){
+
+    totalCompra= pedido.reduce( (acum,elemento)=> {acum+ elemento.total},0);
     pedidoHTML=`<article id="tituloPedido" class="row">
     <div class="col-sm-1 itemCodigo">Código</div>
     <div class="col-sm-1 itemCantidad  text-end">Cant</div>
-    <div class="col-sm-6 itemNombre">Producto Pedido</div>
-    <div class="col-sm-3 itemPrecio  text-end">Precio Final</div>
+    <div class="col-sm-5 itemNombre">Producto Pedido</div>
+    <div class="col-sm-2 itemPrecio  text-end">Precio </div>
+    <div class="col-sm-2 itemPrecio  text-end">Final</div>
     <div class="col-sm-1 itemBorrar"></div>
     
     </article>`;
@@ -51,8 +89,10 @@ function mostrarCarrito(){
         pedidoHTML= `${pedidoHTML}<article class="row itemPedido">
             <div class="col-sm-1 itemCodigo">${pedido[i].codigo}</div>
             <div class="col-sm-1 itemCantidad text-end">${pedido[i].cantidad}</div>
-            <div class="col-sm-6 itemNombre">${pedido[i].nombre}</div>
-            <div class="col-sm-3 itemPrecio text-end">${pedido[i].precio}</div>
+            <div class="col-sm-5 itemNombre">${pedido[i].nombre}</div>
+            <div class="col-sm-2 text-end">${pedido[i].precioUnit}</div>
+            <div class="col-sm-2 text-end">${pedido[i].total}</div>    
+
             <div class="col-sm-1 itemBorrar"><button type="button" class="btnEliminar" onClick="borrarItem(${i})"><img src="./imgs/papelera.png"></button>
             
         </article>`
@@ -61,9 +101,10 @@ function mostrarCarrito(){
         </article>`;
  */    }
     if (pedido.length>0){
-        // tengo algo cargado. Muestro botón enviar pedido
-        pedidoHTML= `${pedidoHTML}<article>
-        <button class="botonEnviar" type="button" onClick="enviarPedido()">Enviar Pedido</button>
+        // tengo algo cargado. Muestro botón enviar pedido y total
+        pedidoHTML= `${pedidoHTML}<article class="row">
+        <div class="col-sm-6"><button class="botonEnviar" type="button" onClick="enviarPedido()">Enviar Pedido</button></div>
+        <div class="col-sm-6">$${totalCompra}</div>
         </article>`
     }
 
@@ -71,44 +112,82 @@ function mostrarCarrito(){
 
 }
 
-function leoDB() {
+function leoDB(tipo,codInicial,aumento) {
 
     // Creo la lista de Productos.. En un futuro se leerán  de una DB
-    desc="Pulseras plásticas para eventos, a prueba de agua. Podes personalizarlas a tu gusto.";
-    arti0= new Articulo(1045,"Pulseras para eventos",desc,100,1200,500,20,"pulseras.svg");
-    desc="Promociona tu negocio o emprendimientos con llaveros cinta full color." ;  
-    arti1= new Articulo(2254,"Llaveros cinta",desc,50,1500,200,10,"llaveros.svg");
-    desc="Entradas para eventos a todo color.";
-    arti2= new Articulo(1234,"Entradas para eventos",desc,1000,1600,3000,20,"entradas.svg");
-    desc="Tazas para promoción. Forma y color a elección";
-    arti3= new Articulo(654,"Tazas personalizadas",desc,2,3000,10,30,"tazas.svg");
-    desc="Tazas para promoción. Forma y color a elección";
-    arti4= new Articulo(3547,"Porros de Marihuana",desc,2,3000,10,30,"llaveros.svg");
-    desc="Promociona tu negocio o emprendimientos con llaveros cinta full color." ;
-    arti5= new Articulo(1238,"Folletos tamaño A5",desc,1000,3500,5000,25,"entradas.svg")
+ 
+    lista.push(new Articulo(codInicial,"Pulseras para eventos "+tipo,
+        "Pulseras plásticas para eventos, a prueba de agua. Podes personalizarlas a tu gusto.",
+        100,1200*aumento,500,20,"pulseras.svg"));
+    lista.push(new Articulo(codInicial+1,"Llaveros cinta "+tipo,
+    "Promociona tu negocio o emprendimientos con llaveros cinta full color.",
+        50,1500*aumento,200,10,"llaveros.svg"));
+    lista.push(new Articulo(codInicial+2,"Entradas para eventos "+tipo,
+        "Entradas para eventos a todo color.",
+        1000,1600*aumento,3000,20,"entradas.svg"));
+    lista.push(new Articulo(codInicial+3,"Tazas personalizadas "+tipo,
+        "Tazas para promoción. Forma y color a elección",
+        2,3000*aumento,10,30,"tazas.svg"));
+    lista.push(new Articulo(codInicial+4,"Tarjetas Personales "+tipo,
+        "Pack de 120 tarjetas personales a precio IN-CRE-I-BLE!",
+        120,450*aumento,1000,30,"tarjetas.svg"));
+    lista.push(new Articulo(codInicial+5,"Folletos tamaño A5 "+tipo,
+        "Promociona tu negocio o emprendimientos con llaveros cinta full color.",
+        1000,3500*aumento,5000,25,"entradas.svg"));
 
-    lista.push(arti0, arti1, arti2, arti3,arti4,arti5);
 }
 
-function muestroProds(ini,fin){
-// muestro los productos desde ini a Fin.
-// Falta implementar paginación de muchos productos.
-
-listaHTML=""
-    for (i=ini; i<fin+1 & i<lista.length;i++){
+function mostrarProductos(ini,fin){
+    // muestro los productos desde ini a Fin.
+    // Falta implementar paginación de muchos productos.
+    if (!filtro.length===0){
+        // tengo un filtro.. lo aplico
+    }else {
+        // no tengo filtro..Copio la lista completa
+        catalogo= lista.map((x)=> x);
+    }
+    largoCat= catalogo.length;
+    ini=(pagina-1)*10;
+    fin=ini + prodPorPagina -1;
+     listaHTML=""
+    for (i=ini; i<fin+1 & i<largoCat;i++){
         // recorro lista de #ini a #fin ..
         listaHTML= `${listaHTML}<article  class='card col p-2'>
-         <img src='${lista[i].imagen}'alt='' class='artImg'>
-        <h4 class='artNombre'>${lista[i].nombre}</h4> <h6 class='artDescri'>${lista[i].descripcion}</h6>
-        <p class='artPrecio'>Precio Pack x ${lista[i].pack}: \$${lista[i].precio}</p>
-        <p class='artDesc'>Mas de ${lista[i].topeDescuento} unid. ${lista[i].descuento}% Descuento</p>
-        <button class="botonComprar" type="button" onClick="agregarCarrito(${i})">Agregar</button>
+         <img src='${catalogo[i].imagen}'alt='' class='artImg'>
+        <h4 class='artNombre'>${catalogo[i].nombre}</h4> <h6 class='artDescri'>${catalogo[i].descripcion}</h6>
+        <p class='artPrecio'>Precio Pack x ${catalogo[i].pack}: \$${catalogo[i].precio}</p>
+        <p class='artDesc'>Mas de ${catalogo[i].topeDescuento} unid. ${catalogo[i].descuento}% Descuento</p>
+        <button class="botonComprar" type="button" onClick="agregarCarrito(${catalogo[i].codigo})">Agregar</button>
         </article>`;
     }
+        console.log(largoCat, fin>largoCat);
+        itemsPagina= "de "+(ini+1)+" a "+(fin>largoCat?largoCat:fin+1);
+        botPagAnterior="";
+        botPagSiguiente="";
+        if (pagina>1){
+            //Estoy en pagina distinta a la primera. Muestro botón para pagina anterior.
+            botPagAnterior="<button class='botonPagAnterior' type='button' onClick='cambiarPagina(-1)'>Pagina Anterior</button>"
+        }
+        if (largoCat>fin){
+            // tengo mas productos. Muestro boton de pagina siguiente
+            botPagSiguiente="<button class='botonPagSiguiente' type='button' onClick='cambiarPagina(1)'>Pagina Siguiente</button>"
+
+        }
+
+        listaHTML= `${listaHTML}<article class='row'>
+        <div class='col-sm-2'></div>
+        <div class='col-sm-2'>${botPagAnterior}</div>
+        <div class='col-sm-2'>${itemsPagina}</div>
+        <div class='col-sm-2'>${botPagSiguiente}</div>
+        <div class='col-sm-2'></div>   `; 
 
     document.getElementById("listaProductos").innerHTML= listaHTML;
 }
 
+function cambiarPagina(cambio){
+    pagina=pagina+cambio;
+    mostrarProductos();
+}
 function borrarItem(item){
 /*     alert("borrando articulo "+pedido[item].nombre); */
     pedido.splice(item,1);
@@ -117,7 +196,19 @@ function borrarItem(item){
 
 // Defino array para lista de produtos a mostrar
 const lista= [];
+// defino array para subconjunto de lista a mostrar (si aplico filtros)
+let catalogo=[];
 // Defino array para pedido.
 const pedido=[];
-leoDB();
-muestroProds(0,9); 
+
+// truco para generar muchos articulos y poder implementar paginacion (pendiente!)
+leoDB("",1,1);
+leoDB("Vip",10,1.10);
+leoDB("Premium",20,1.25);
+leoDB("Gold",30,1.4);
+
+// defino variables para paginación
+let filtro="";
+let pagina=1;
+let prodPorPagina= 10;
+mostrarProductos(); 
