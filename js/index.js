@@ -1,6 +1,7 @@
 class Articulo {
-    constructor (codigo,nombre, descripcion, pack, precio, topeDescuento, descuento, imagen) {
+    constructor (codigo,rubro, nombre, descripcion, pack, precio, topeDescuento, descuento, imagen) {
         this.codigo= codigo;
+        this.rubro= rubro;
         this.nombre= nombre;
         this.descripcion=descripcion;
         this.pack= pack;
@@ -18,7 +19,6 @@ class Articulo {
             precioCompra= precioCompra - (precioCompra/100*descuento);
         }
         return precioCompra;
-
     }
 }
 
@@ -116,33 +116,37 @@ function leoDB(tipo,codInicial,aumento) {
 
     // Creo la lista de Productos.. En un futuro se leerán  de una DB
  
-    lista.push(new Articulo(codInicial,"Pulseras para eventos "+tipo,
+    lista.push(new Articulo(codInicial, tipo, "Pulseras para eventos "+tipo,
         "Pulseras plásticas para eventos, a prueba de agua. Podes personalizarlas a tu gusto.",
         100,1200*aumento,500,20,"pulseras.svg"));
-    lista.push(new Articulo(codInicial+1,"Llaveros cinta "+tipo,
+    lista.push(new Articulo(codInicial+1,tipo, "Llaveros cinta "+tipo,
     "Promociona tu negocio o emprendimientos con llaveros cinta full color.",
         50,1500*aumento,200,10,"llaveros.svg"));
-    lista.push(new Articulo(codInicial+2,"Entradas para eventos "+tipo,
+    lista.push(new Articulo(codInicial+2,tipo, "Entradas para eventos "+tipo,
         "Entradas para eventos a todo color.",
         1000,1600*aumento,3000,20,"entradas.svg"));
-    lista.push(new Articulo(codInicial+3,"Tazas personalizadas "+tipo,
+    lista.push(new Articulo(codInicial+3,tipo, "Tazas personalizadas "+tipo,
         "Tazas para promoción. Forma y color a elección",
         2,3000*aumento,10,30,"tazas.svg"));
-    lista.push(new Articulo(codInicial+4,"Tarjetas Personales "+tipo,
+    lista.push(new Articulo(codInicial+4,tipo, "Tarjetas Personales "+tipo,
         "Pack de 120 tarjetas personales a precio IN-CRE-I-BLE!",
         120,450*aumento,1000,30,"tarjetas.svg"));
-    lista.push(new Articulo(codInicial+5,"Folletos tamaño A5 "+tipo,
+    lista.push(new Articulo(codInicial+5,tipo, "Folletos tamaño A5 "+tipo,
         "Promociona tu negocio o emprendimientos con llaveros cinta full color.",
         1000,3500*aumento,5000,25,"entradas.svg"));
 
 }
 
-function mostrarProductos(ini,fin){
+function mostrarProductos(filtro=""){
     // muestro los productos desde ini a Fin.
     // Falta implementar paginación de muchos productos.
-    if (!filtro.length===0){
-        // tengo un filtro.. lo aplico
+ 
+    if (!filtro.length==0){
+       // tengo un filtro.. lo aplico
+        catalogo=lista.filter(item=>item.rubro==filtro);
+        console.log(catalogo);
     }else {
+        console.log("sinfiltro"+filtro);
         // no tengo filtro..Copio la lista completa
         catalogo= lista.map((x)=> x);
     }
@@ -160,7 +164,6 @@ function mostrarProductos(ini,fin){
         <button class="botonComprar" type="button" onClick="agregarCarrito(${catalogo[i].codigo})">Agregar</button>
         </article>`;
     }
-        console.log(largoCat, fin>largoCat);
         itemsPagina= "de "+(ini+1)+" a "+(fin>largoCat?largoCat:fin+1);
         botPagAnterior="";
         botPagSiguiente="";
@@ -182,6 +185,7 @@ function mostrarProductos(ini,fin){
         <div class='col-sm-2'></div>   `; 
 
     document.getElementById("listaProductos").innerHTML= listaHTML;
+    //alert("pausa para comprobar que SI filtra");
 }
 
 function cambiarPagina(cambio){
@@ -194,6 +198,17 @@ function borrarItem(item){
     mostrarCarrito();
 }
 
+function filtrar(rubro){
+    if (rubro==="Todos"){
+        filtro="";
+    }else if (rubro==="Standard"){
+        filtro="Std";
+    } else {
+        filtro=rubro;
+    }
+    mostrarProductos(filtro);
+}
+
 // Defino array para lista de produtos a mostrar
 const lista= [];
 // defino array para subconjunto de lista a mostrar (si aplico filtros)
@@ -202,7 +217,7 @@ let catalogo=[];
 const pedido=[];
 
 // truco para generar muchos articulos y poder implementar paginacion (pendiente!)
-leoDB("",1,1);
+leoDB("Std",1,1);
 leoDB("Vip",10,1.10);
 leoDB("Premium",20,1.25);
 leoDB("Gold",30,1.4);
@@ -211,4 +226,4 @@ leoDB("Gold",30,1.4);
 let filtro="";
 let pagina=1;
 let prodPorPagina= 10;
-mostrarProductos(); 
+mostrarProductos(""); 
