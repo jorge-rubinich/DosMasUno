@@ -74,7 +74,7 @@ function agregarCarrito (codSolicitado){
 
 function mostrarCarrito(){
 
-    totalCompra= pedido.reduce( (acum,elemento)=> {acum+ elemento.total},0);
+    totalCompra= pedido.reduce( (acum,elemento)=> acum+ elemento.total,0);
     pedidoHTML=`<article id="tituloPedido" class="row">
     <div class="col-sm-1 itemCodigo">Código</div>
     <div class="col-sm-1 itemCantidad  text-end">Cant</div>
