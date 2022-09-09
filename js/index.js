@@ -102,9 +102,10 @@ function mostrarCarrito(){
  */    }
     if (pedido.length>0){
         // tengo algo cargado. Muestro botón enviar pedido y total
-        pedidoHTML= `${pedidoHTML}<article class="row">
-        <div class="col-sm-6"><button class="botonEnviar" type="button" onClick="enviarPedido()">Enviar Pedido</button></div>
-        <div class="col-sm-6">$${totalCompra}</div>
+        pedidoHTML= `${pedidoHTML}
+        <article class="row">
+        <div class="col-sm-9 text-center"><button class="botonEnviar" type="button" onClick="enviarPedido()">Enviar Pedido</button></div>
+        <div class="col-sm-2 text-end border">$${totalCompra}</div>
         </article>`
     }
 
@@ -146,7 +147,6 @@ function mostrarProductos(filtro=""){
         catalogo=lista.filter(item=>item.rubro==filtro);
         console.log(catalogo);
     }else {
-        console.log("sinfiltro"+filtro);
         // no tengo filtro..Copio la lista completa
         catalogo= lista.map((x)=> x);
     }
@@ -178,11 +178,11 @@ function mostrarProductos(filtro=""){
         }
 
         listaHTML= `${listaHTML}<article class='row'>
-        <div class='col-sm-2'></div>
-        <div class='col-sm-2'>${botPagAnterior}</div>
-        <div class='col-sm-2'>${itemsPagina}</div>
-        <div class='col-sm-2'>${botPagSiguiente}</div>
-        <div class='col-sm-2'></div>   `; 
+        <div class='col-sm-3'></div>
+        <div class='col-sm-2 text-center'>${botPagAnterior}</div>
+        <div class='col-sm-2 text-center'>${itemsPagina}</div>
+        <div class='col-sm-2 text-center'>${botPagSiguiente}</div>
+        <div class='col-sm-3'></div>   `; 
 
     document.getElementById("listaProductos").innerHTML= listaHTML;
     //alert("pausa para comprobar que SI filtra");

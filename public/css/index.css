@@ -100,7 +100,7 @@ html {
       margin-top: 0;
       padding-top: 0; }
 
-.botonComprar, .botonEnviar {
+.botonComprar, .botonEnviar, .botonFiltro {
   border: 0;
   line-height: 2.3;
   padding: 0 20px;
@@ -115,12 +115,16 @@ html {
   width: 130px;
   align-self: end; }
 
-.botonComprar:hover, .botonEnviar:hover {
+.botonComprar:hover, .botonEnviar:hover, .botonFiltro:hover {
   background-color: blue; }
 
 .botonEnviar {
   width: 150px;
   align-items: end; }
+
+.botonFiltro {
+  width: 100px;
+  margin: 0px 10px; }
 
 .btnEliminarx {
   width: 20px;
@@ -154,3 +158,9 @@ html {
 
 .itemCantidad, .itemPrecio {
   align-content: right; }
+
+#botonesFiltro {
+  background-color: #c3dfdf;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px; }

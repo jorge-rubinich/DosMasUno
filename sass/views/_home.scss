@@ -68,6 +68,11 @@
     align-items: end;
 }
 
+.botonFiltro {
+    @extend .botonComprar;
+    width: 100px;
+    margin: 0px 10px;
+}
 .btnEliminarx {
     width: 20px;
     height: 20px;
@@ -107,5 +112,13 @@
 
 .itemCantidad, .itemPrecio {
     align-content: right;
+}
+
+#botonesFiltro {
+    background-color: rgb(195, 223, 223);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+
 }
 
