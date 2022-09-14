@@ -145,7 +145,6 @@ function mostrarProductos(filtro=""){
     if (!filtro.length==0){
        // tengo un filtro.. lo aplico
         catalogo=lista.filter(item=>item.rubro==filtro);
-        console.log(catalogo);
     }else {
         // no tengo filtro..Copio la lista completa
         catalogo= lista.map((x)=> x);
