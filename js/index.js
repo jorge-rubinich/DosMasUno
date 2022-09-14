@@ -199,31 +199,39 @@ function borrarItem(item){
 }
 
 function filtrar(rubro){
+    let filtro="";
     if (rubro==="Todos"){
         filtro="";
-    }else if (rubro==="Standard"){
-        filtro="Std";
-    } else {
+    }else {
         filtro=rubro;
     }
     mostrarProductos(filtro);
 }
 
-// Defino array para lista de produtos a mostrar
+// Defino array para lista de productos a mostrar
 const lista= [];
 // defino array para subconjunto de lista a mostrar (si aplico filtros)
 let catalogo=[];
 // Defino array para pedido.
 const pedido=[];
 
-// truco para generar muchos articulos y poder implementar paginacion (pendiente!)
+// truco para generar muchos articulos y poder implementar paginacion 
 leoDB("Std",1,1);
 leoDB("Vip",10,1.10);
 leoDB("Premium",20,1.25);
 leoDB("Gold",30,1.4);
 
+
+// Defino eventos para botones de barra superior.
+document.getElementById("btnFiltroStd").addEventListener("click",()=>filtrar("Std"));
+document.getElementById("btnFiltroVip").addEventListener("click",()=>filtrar("Vip"));
+document.getElementById("btnFiltroPrm").addEventListener("click",()=>filtrar("Premium"));
+document.getElementById("btnFiltroGld").addEventListener("click",()=>filtrar("Gold"));
+document.getElementById("btnFiltroAll").addEventListener("click",()=>filtrar("Todos"));
+
 // defino variables para paginación
 let filtro="";
 let pagina=1;
 let prodPorPagina= 10;
+
 mostrarProductos(""); 
