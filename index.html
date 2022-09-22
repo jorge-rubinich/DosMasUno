@@ -66,15 +66,6 @@
                   <!-- Esta seccion se completa desde JS -->
             </section>
 
-            
-            <section id="pedidoContainer">
-                <div id="pedido" class="row justify-content-center  ml-12 mt-3 mb-3">
-                    <div id="titulo">TU PEDIDO</div>
-                    <div id="cuerpo">--* No se han registrado pedidos aún *--</div>
-                    <!-- Esta seccion se completa desde JS -->
-                <div>
-            </section>
-
             <!-- Canvas del carrito de compras -->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas" aria-labelledby="carritoOffcanvasLabel">
                 <div class="offcanvas-header">
@@ -97,9 +88,34 @@
                             <tr id="footer">
                             <th scope="row" colspan="6">Tu carrito está vacío!</th>
                             </tr>
+  
                         </tfoot>
                     </table>
 
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Enviar Pedido.
+                            </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <form class="px-4 py-3">
+                                        <div class="form-group">
+                                            <label for="pedidoEmail">Correo electrónico</label>
+                                            <input type="email" class="form-control" id="pedidoEmail" placeholder="email@example.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pedidoNombre">Apellido y Nombre </label>
+                                            <input type="text" class="form-control" id="pedidoNombre" placeholder="Apellido y Nombre">
+                                        </div>
+                                        <button id="btnEnviarPedido" class="btn btn-primary btnEnviarPedido">Enviar Pedido</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
               </div>
 

@@ -168,6 +168,6 @@ html {
 .offcanvas.offcanvas-end {
   top: 0;
   right: 0;
-  width: 450px;
+  width: 600px;
   border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
   transform: translateX(100%); }

@@ -5,7 +5,7 @@ class Articulo {
         this.nombre= nombre;
         this.descripcion=descripcion;
         this.pack= pack;
-        this.precio= precio;
+        this.precio= parseInt(precio.toFixed(0));
         this.topeDescuento= topeDescuento;
         this.descuento= descuento;
         this.imagen= "./imgs/"+imagen;
@@ -31,7 +31,6 @@ class Carrito {
         this.total= this.cantidad* this.precioCompra;
     }
 }
-
 
 function crearTarjeta(producto) {
     //Botón
@@ -94,7 +93,7 @@ function mostrarCarrito() {
 
             containerCarrito.append(lineasCarrito);
 
-            //Agregar evento a input de renglón en carrito
+            //Agregar evento para 'escuchar' el cambio de cantidad en carrito
             let inputCantidadProducto = document.getElementById(`cantidad-producto-${elemento.producto.codigo}`);
             inputCantidadProducto.addEventListener('change', (ev) => {
                 let vieCantidad= elemento.cantidad;
@@ -118,52 +117,25 @@ function mostrarCarrito() {
     guardarCarrito();
 
     if(pedido.length == 0) {
-        containerCarritoFooter.innerHTML = `<th scope="row" colspan="6">Carrito vacío - comience a comprar!</th>`;
+        containerCarritoFooter.innerHTML = `<th scope="row" colspan="6">Tu carrito está vacío!</th>`;
     } else {
         containerCarritoFooter.innerHTML = `<th scope="row" colspan="6">Total de la compra: ${totalCompra}</th>`;
     }
 
+    // Agrego accion al boton 
+    botonEnviarPedido.addEventListener("click",()=>enviarPedido(ev));
+    console.log(botonEnviarPedido);
 }
 
-
-function mostrarCarritoVie(){
-
-    totalCompra= pedido.reduce( (acum,elemento)=> acum+ elemento.total,0);
-    pedidoHTML=`<article id="tituloPedido" class="row">
-    <div class="col-sm-1 itemCodigo">Código</div>
-    <div class="col-sm-1 itemCantidad  text-end">Cant</div>
-    <div class="col-sm-5 itemNombre">Producto Pedido</div>
-    <div class="col-sm-2 itemPrecio  text-end">Precio </div>
-    <div class="col-sm-2 itemPrecio  text-end">Final</div>
-    <div class="col-sm-1 itemBorrar"></div>
-    
-    </article>`;
-    for (i=0; i<pedido.length;i++){
-        // recorro el array pedido..  ..
-        pedidoHTML= `${pedidoHTML}<article class="row itemPedido">
-            <div class="col-sm-1 itemCodigo">${pedido[i].codigo}</div>
-            <div class="col-sm-1 itemCantidad text-end">${pedido[i].cantidad}</div>
-            <div class="col-sm-5 itemNombre">${pedido[i].nombre}</div>
-            <div class="col-sm-2 text-end">${pedido[i].precioUnit}</div>
-            <div class="col-sm-2 text-end">${pedido[i].total}</div>    
-
-            <div class="col-sm-1 itemBorrar"><button type="button" class="btnEliminar" onClick="borrarItem(${i})"><img src="./imgs/papelera.png"></button>
-            
-        </article>`
-
-/*         <article>
-        </article>`;
- */    }
-    if (pedido.length>0){
-        // tengo algo cargado. Muestro botón enviar pedido y total
-        pedidoHTML= `${pedidoHTML}
-        <article class="row">
-        <div class="col-sm-9 text-center"><button class="botonEnviar" type="button" onClick="enviarPedido()">Enviar Pedido</button></div>
-        <div class="col-sm-2 text-end border">$${totalCompra}</div>
-        </article>`
+function enviarPedido(ev) {
+    ev.preventDefault();
+    if (pedido.lenght>0 & document.getElementById("pedidoMail").value) {
+        // tengo pedido y tengo mail.
+        swal("Pedido enviado!", "Muchas Gracias! Muy pronto le contactaremos", "success");
+    }else{
+        let detalleError= pedido.lenght>0? "Tu carrito está vacío. Carga algún producto antes de enviar." : "Por favor, ingresa tus datos antes de enviar.";
+        swal("Upps! Algo salio mal", detalleError, "error");
     }
-
-    document.getElementById("cuerpo").innerHTML= pedidoHTML;
 
 }
 
@@ -214,40 +186,19 @@ function mostrarProductos(filtro=""){
         let articleTarjeta= crearTarjeta(catalogo[i]);
         listaCatalogo.appendChild(articleTarjeta);
     }
-
-    //Items paginas
-    itemsPagina = document.createElement("div");
-    itemsPagina.className = 'col-sm-2 text-center';
-    itemsPagina.innerText = "de "+(ini+1)+" a "+(fin>largoCat?largoCat:fin+1);
-
-    //botPagAnterior
-    botAnterior = document.createElement("div");
-    botAnterior.className = 'col-sm-2 text-center';
-    botAnterior.innerText = "";
-    
-    //botPagSiguiente
-    botSiguiente = document.createElement("div");
-    botSiguiente.className = 'col-sm-2 text-center';
-    botSiguiente.innerText = "";
-
-    if (pagina>1){
-        //Estoy en pagina distinta a la primera. Muestro botón para pagina anterior.
-        botAnterior.innerText="Pagina Anterior";
-    }
-    if (largoCat>fin){
-        // tengo mas productos. Muestro boton de pagina siguiente
-        botSiguiente.innerText = "Pagina Siguiente";
-    }
-
-    divMargenes= document.createElement("div");
-    divMargenes.className="col-sm-3";
+   
     let catalogoFooter= document.createElement("article");
     catalogoFooter.className="row";
-    catalogoFooter.appendChild(divMargenes);
-    catalogoFooter.appendChild(botAnterior);
-    catalogoFooter.appendChild(itemsPagina);
-    catalogoFooter.appendChild(botSiguiente);
-    catalogoFooter.appendChild(divMargenes);
+    catalogoFooter.innerHTML= `
+    <div class="col-sm-3"></div>
+    <div class="btn btn-dark col-sm-2 text-center ${(pagina>1)? " " : "disabled"}" id="botonAnterior">pagina anterior</div>
+    <div class="col-sm-2 text-center align-middle">de ${ini+1} a ${fin>largoCat?largoCat:fin+1}</div>
+    <div class="btn btn-dark col-sm-2 text-center ${(largoCat>fin)? " " : "disabled"}" id="botonSiguiente">pagina siguiente</div>
+    <div class="col-sm-3"></div>`
+    listaCatalogo.appendChild(catalogoFooter);
+
+    document.getElementById("botonAnterior").addEventListener("click",()=>{cambiarPagina(-1)});
+    document.getElementById("botonSiguiente").addEventListener("click",()=>{cambiarPagina(+1)});
 
 }
 
@@ -279,10 +230,12 @@ let catalogo=[];
 // Defino array para pedido.
 const pedido=[];
 
+// elementos HTML
 const listaCatalogo = document.getElementById('listaProductos');
 const avisoCompra = document.getElementById("avisoCompra")
 const containerCarrito = document.querySelector("#items");
 const containerCarritoFooter = document.querySelector("#footer");
+const botonEnviarPedido= document.getElementById("btnEnviarPedido");
 
 // truco para generar muchos articulos y poder implementar paginacion 
 leoDB("Std",1,1);
