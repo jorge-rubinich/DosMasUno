@@ -5,74 +5,128 @@ class Articulo {
         this.nombre= nombre;
         this.descripcion=descripcion;
         this.pack= pack;
-        this.precio= precio.toFixed(0);
+        this.precio= precio;
         this.topeDescuento= topeDescuento;
         this.descuento= descuento;
         this.imagen= "./imgs/"+imagen;
-        this.cantidad=0;
     }
 
-    devolverPrecio (cantidad){
-        precioCompra=this.precio*cantidad;
-        cantidadItems= cantidad*this.pack;
-        if (cantidadItems>=this.topeDescuento) {
-            precioCompra= precioCompra - (precioCompra/100*descuento);
-        }
-        return precioCompra;
-    }
 }
 
 class Carrito {
-    constructor (codigo,nombre,pack,precio,topeDescuento,descuento) {
-        this.codigo= codigo;
-        this.nombre= nombre;
-        this.precioBase= precio;
-        this.pack= pack;
-        this.precioUnit=0;
-        this.total= 0;
-        this.cantidad= 0;
-        this.topeDescuento=topeDescuento;
-        this.descuento= descuento;
+    constructor (producto, cantidad=0) {
+        this.producto= producto;
+        this.cantidad= cantidad;
+        this.precioCompra= 0
+        this.total=0;
+        this.comprar(0);
     }
 
     comprar(cantidadComprada){
         this.cantidad= this.cantidad+ cantidadComprada;
-        this.precioUnit= this.precioBase;
-        if (this.cantidad*this.pack>=this.topeDescuento){
-            this.precioUnit= this.precioBase - this.precioBase/100*this.descuento;
+        this.precioCompra= this.producto.precio;
+        if (this.cantidad*this.producto.pack>=this.producto.topeDescuento){
+            this.precioCompra= this.producto.precio - this.producto.precio/100*this.producto.descuento;
         }
-        this.total= this.cantidad* this.precioUnit;
+        this.total= this.cantidad* this.precioCompra;
     }
 }
 
-function agregarCarrito (codSolicitado){
-    let index=0;
-    // localizo el codigo en lista[], necesito sus datos para copiar.
-    let codEnLista = lista.find(item => item.codigo===codSolicitado);
-    if (codEnLista===undefined){
-        // si el codigo no esta en la lista-> Algo grave ocurrió.
-        ALERT("Apa! Algo salió mal. Vuelva a intentarlo, por favor");
-        // aca deberia loguear el error e informarlo .
-    }else{
-        // Tengo el codigo. Busco si ya lo tengo cargado en el carrito.
-        let codEnPedido= pedido.find(item => item.codigo===codSolicitado);
-        if (codEnPedido===undefined){
-            // El find no fue exitoso. debo agregar el producto al carrito.
-            pedido.push(new Carrito(codEnLista.codigo,codEnLista.nombre,codEnLista.pack,codEnLista.precio,
-                codEnLista.topeDescuento,codEnLista.descuento));
-            // como es un nuevo elemento, index es longitud -1
-            index=pedido.length-1;
-        } else {
-            // Lo encontre. Uso codEnPedido para encontrar la posicion en el array
-            index=pedido.indexOf(codEnPedido);
-        }
+
+function crearTarjeta(producto) {
+    //Botón
+    let botonAgregar = document.createElement("button");
+    botonAgregar.className = "botonComprar";
+    botonAgregar.innerText = "Agregar";
+  
+    //Card body
+    let tarjeta = document.createElement("article");
+    tarjeta.className = "card col p-2";
+    tarjeta.innerHTML = `
+        <img src='${producto.imagen}'alt='' class='artImg'>
+        <h4 class='artNombre'>${producto.nombre}</h4> <h6 class='artDescri'>${producto.descripcion}</h6>
+        <p class='artPrecio'>Precio Pack x ${producto.pack}: \$${producto.precio}</p>
+    `;
+
+    tarjeta.append(botonAgregar);
+
+    //Agregar evento al botonAgregar
+    botonAgregar.onclick = () => {
+         let lineaEnCarrito = pedido.find((elem) => elem.producto.codigo == producto.codigo);
+    
+        lineaEnCarrito ?  lineaEnCarrito.comprar(1) : pedido.push(new Carrito(producto, 1)) ;
+        avisoCompra.innerHTML="";
+        divAvisoCompra= document.createElement("div");
+        divAvisoCompra.className="alert alert-info alert-dismissible ms-5 me-5";
+        divAvisoCompra.innerHTML=`<p>Has agregado <Strong>${producto.nombre.trim()}</strong> a tu carrito.<p>
+        <button type="button" class="btn-close position-absolute end-0 bottom-0" data-bs-dismiss="alert"></button>`;
+        avisoCompra.appendChild(divAvisoCompra);
+        guardarCarrito();
+        mostrarCarrito();
     }
-    // aumento cantidad en (por ahora 1)
-    pedido[index].comprar(1);
-    mostrarCarrito();
+
+    return tarjeta
 }
 
-function mostrarCarrito(){
+function guardarCarrito() {
+    localStorage.clear();
+    localStorage.setItem('pedido',JSON.stringify(pedido));
+
+}
+
+
+function mostrarCarrito() {
+    containerCarrito.innerHTML = "";
+    totalCompra= pedido.reduce( (acum,elemento)=> acum+ elemento.total,0);
+
+    pedido.forEach(
+        (elemento) => {
+            let lineasCarrito= document.createElement("tr");
+            //<td>${elemento.producto.codigo}</td>
+            lineasCarrito.innerHTML = `
+                <td>${elemento.producto.nombre}</td>
+                <td><input id="cantidad-producto-${elemento.producto.codigo}" type="number" value="${elemento.cantidad}" min="1" max="1000" step="1" style="width: 40px;"/></td>
+                <td>${elemento.precioCompra}</td>
+                <td>${elemento.total}</td>
+                <td><button id="eliminar-producto-${elemento.producto.codigo}" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></td>
+                
+            `;
+
+            containerCarrito.append(lineasCarrito);
+
+            //Agregar evento a input de renglón en carrito
+            let inputCantidadProducto = document.getElementById(`cantidad-producto-${elemento.producto.codigo}`);
+            inputCantidadProducto.addEventListener('change', (ev) => {
+                let vieCantidad= elemento.cantidad;
+                let cantidadComprada= ev.target.value - vieCantidad;
+                elemento.comprar(cantidadComprada);
+
+                mostrarCarrito();
+            });
+
+            //Agregar evento a eliminar producto
+            let botonEliminarProducto = document.getElementById(`eliminar-producto-${elemento.producto.codigo}`);
+            botonEliminarProducto.addEventListener('click', () => {
+                let indiceEliminar =  pedido.indexOf(elemento);
+                pedido.splice(indiceEliminar,1);
+                
+                mostrarCarrito();
+            });
+            
+        }
+    );
+    guardarCarrito();
+
+    if(pedido.length == 0) {
+        containerCarritoFooter.innerHTML = `<th scope="row" colspan="6">Carrito vacío - comience a comprar!</th>`;
+    } else {
+        containerCarritoFooter.innerHTML = `<th scope="row" colspan="6">Total de la compra: ${totalCompra}</th>`;
+    }
+
+}
+
+
+function mostrarCarritoVie(){
 
     totalCompra= pedido.reduce( (acum,elemento)=> acum+ elemento.total,0);
     pedidoHTML=`<article id="tituloPedido" class="row">
@@ -152,39 +206,49 @@ function mostrarProductos(filtro=""){
     largoCat= catalogo.length;
     ini=(pagina-1)*10;
     fin=ini + prodPorPagina -1;
-     listaHTML=""
+ 
+    listaCatalogo.innerHTML ="";
+
     for (i=ini; i<fin+1 & i<largoCat;i++){
         // recorro lista de #ini a #fin ..
-        listaHTML= `${listaHTML}<article  class='card col p-2'>
-         <img src='${catalogo[i].imagen}'alt='' class='artImg'>
-        <h4 class='artNombre'>${catalogo[i].nombre}</h4> <h6 class='artDescri'>${catalogo[i].descripcion}</h6>
-        <p class='artPrecio'>Precio Pack x ${catalogo[i].pack}: \$${catalogo[i].precio}</p>
-        <p class='artDesc'>Mas de ${catalogo[i].topeDescuento} unid. ${catalogo[i].descuento}% Descuento</p>
-        <button class="botonComprar" type="button" onClick="agregarCarrito(${catalogo[i].codigo})">Agregar</button>
-        </article>`;
+        let articleTarjeta= crearTarjeta(catalogo[i]);
+        listaCatalogo.appendChild(articleTarjeta);
     }
-        itemsPagina= "de "+(ini+1)+" a "+(fin>largoCat?largoCat:fin+1);
-        botPagAnterior="";
-        botPagSiguiente="";
-        if (pagina>1){
-            //Estoy en pagina distinta a la primera. Muestro botón para pagina anterior.
-            botPagAnterior="<button class='botonPagAnterior' type='button' onClick='cambiarPagina(-1)'>Pagina Anterior</button>"
-        }
-        if (largoCat>fin){
-            // tengo mas productos. Muestro boton de pagina siguiente
-            botPagSiguiente="<button class='botonPagSiguiente' type='button' onClick='cambiarPagina(1)'>Pagina Siguiente</button>"
 
-        }
+    //Items paginas
+    itemsPagina = document.createElement("div");
+    itemsPagina.className = 'col-sm-2 text-center';
+    itemsPagina.innerText = "de "+(ini+1)+" a "+(fin>largoCat?largoCat:fin+1);
 
-        listaHTML= `${listaHTML}<article class='row'>
-        <div class='col-sm-3'></div>
-        <div class='col-sm-2 text-center'>${botPagAnterior}</div>
-        <div class='col-sm-2 text-center'>${itemsPagina}</div>
-        <div class='col-sm-2 text-center'>${botPagSiguiente}</div>
-        <div class='col-sm-3'></div>   `; 
+    //botPagAnterior
+    botAnterior = document.createElement("div");
+    botAnterior.className = 'col-sm-2 text-center';
+    botAnterior.innerText = "";
+    
+    //botPagSiguiente
+    botSiguiente = document.createElement("div");
+    botSiguiente.className = 'col-sm-2 text-center';
+    botSiguiente.innerText = "";
 
-    document.getElementById("listaProductos").innerHTML= listaHTML;
-    //alert("pausa para comprobar que SI filtra");
+    if (pagina>1){
+        //Estoy en pagina distinta a la primera. Muestro botón para pagina anterior.
+        botAnterior.innerText="Pagina Anterior";
+    }
+    if (largoCat>fin){
+        // tengo mas productos. Muestro boton de pagina siguiente
+        botSiguiente.innerText = "Pagina Siguiente";
+    }
+
+    divMargenes= document.createElement("div");
+    divMargenes.className="col-sm-3";
+    let catalogoFooter= document.createElement("article");
+    catalogoFooter.className="row";
+    catalogoFooter.appendChild(divMargenes);
+    catalogoFooter.appendChild(botAnterior);
+    catalogoFooter.appendChild(itemsPagina);
+    catalogoFooter.appendChild(botSiguiente);
+    catalogoFooter.appendChild(divMargenes);
+
 }
 
 function cambiarPagina(cambio){
@@ -194,6 +258,7 @@ function cambiarPagina(cambio){
 function borrarItem(item){
 /*     alert("borrando articulo "+pedido[item].nombre); */
     pedido.splice(item,1);
+    guardarCarrito();
     mostrarCarrito();
 }
 
@@ -214,6 +279,11 @@ let catalogo=[];
 // Defino array para pedido.
 const pedido=[];
 
+const listaCatalogo = document.getElementById('listaProductos');
+const avisoCompra = document.getElementById("avisoCompra")
+const containerCarrito = document.querySelector("#items");
+const containerCarritoFooter = document.querySelector("#footer");
+
 // truco para generar muchos articulos y poder implementar paginacion 
 leoDB("Std",1,1);
 leoDB("Vip",10,1.10);
@@ -227,10 +297,38 @@ document.getElementById("btnFiltroVip").addEventListener("click",()=>filtrar("Vi
 document.getElementById("btnFiltroPrm").addEventListener("click",()=>filtrar("Premium"));
 document.getElementById("btnFiltroGld").addEventListener("click",()=>filtrar("Gold"));
 document.getElementById("btnFiltroAll").addEventListener("click",()=>filtrar("Todos"));
-
+//document.getElementById("btnCarrito").addEventListener("click",()=>mostrarCarrito());
 // defino variables para paginación
 let filtro="";
 let pagina=1;
 let prodPorPagina= 10;
 
 mostrarProductos(""); 
+
+const pedlocal=JSON.parse(localStorage.getItem('pedido')) || [];
+
+if (pedlocal.length!=0) {
+    swal({
+        title: "Continuamos la compra?",
+        text: "Encontramos un carrito abandonado. ¿Quieres continuar con él?",
+        icon: "warning",
+        buttons: true,
+      })
+      .then((continuar) => {
+        if (continuar) {
+            pedlocal.forEach(ele => pedido.push(new Carrito(ele.producto, ele.cantidad)));
+            avisoCompra.innerHTML="";
+            divAvisoCompra= document.createElement("div");
+            divAvisoCompra.className="alert alert-info alert-dismissible ms-5 me-5";
+            divAvisoCompra.innerHTML=`<p>Perfecto! Ya tienes <Strong>${pedlocal.length}</strong> items en tu carrito.<p>
+            <button type="button" class="btn-close position-absolute end-0 bottom-0" data-bs-dismiss="alert"></button>`;
+            avisoCompra.appendChild(divAvisoCompra);
+            mostrarCarrito();
+        } else {
+          localStorage.clear();
+        }
+      });
+};
+
+
+

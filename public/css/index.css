@@ -164,3 +164,10 @@ html {
   margin-top: 5px;
   margin-bottom: 5px;
   padding: 5px; }
+
+.offcanvas.offcanvas-end {
+  top: 0;
+  right: 0;
+  width: 450px;
+  border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+  transform: translateX(100%); }
