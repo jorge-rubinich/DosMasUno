@@ -45,6 +45,7 @@ function crearTarjeta(producto) {
         <img src='${producto.imagen}'alt='' class='artImg'>
         <h4 class='artNombre'>${producto.nombre}</h4> <h6 class='artDescri'>${producto.descripcion}</h6>
         <p class='artPrecio'>Precio Pack x ${producto.pack}: \$${producto.precio}</p>
+        <p class='artDesc'>Más de ${producto.topeDescuento} unid. ${producto.descuento}% Descuento</p>
     `;
 
     tarjeta.append(botonAgregar);
@@ -120,20 +121,32 @@ function mostrarCarrito() {
         containerCarritoFooter.innerHTML = `<th scope="row" colspan="6">Tu carrito está vacío!</th>`;
     } else {
         containerCarritoFooter.innerHTML = `<th scope="row" colspan="6">Total de la compra: ${totalCompra}</th>`;
+        // Agrego accion al boton 
+        botonEnviarPedido.addEventListener("click",enviarPedido);    
     }
+}
 
-    // Agrego accion al boton 
-    botonEnviarPedido.addEventListener("click",()=>enviarPedido(ev));
-    console.log(botonEnviarPedido);
+function vaciarCarrito() {
+    console.log("entre a vaciar");
+    pedido.length=0;
+    localStorage.clear();
+    mostrarCarrito();
+    avisoCompra.innerHTML="";
+    botonEnviarPedido.removeEventListener("click",enviarPedido);
+    carritoOffcanvas.hide;
 }
 
 function enviarPedido(ev) {
     ev.preventDefault();
-    if (pedido.lenght>0 & document.getElementById("pedidoMail").value) {
-        // tengo pedido y tengo mail.
+    console.log("entre a al funcion");
+    if (pedido.length>0 && document.getElementById("pedidoMail").value) {
+        // tengo pedido y tengo mail.  aca envio el mail.. (algun dia!!)
+        console.log("entre a enviar");
+        vaciarCarrito();
         swal("Pedido enviado!", "Muchas Gracias! Muy pronto le contactaremos", "success");
     }else{
-        let detalleError= pedido.lenght>0? "Tu carrito está vacío. Carga algún producto antes de enviar." : "Por favor, ingresa tus datos antes de enviar.";
+        console.log("entre a error");
+        let detalleError= (pedido.length==0)? "Tu carrito está vacío. Carga algún producto antes de enviar." : "Por favor, ingresa tus datos antes de enviar.";
         swal("Upps! Algo salio mal", detalleError, "error");
     }
 
@@ -166,15 +179,19 @@ function leoDB(tipo,codInicial,aumento) {
 
 function mostrarProductos(filtro=""){
     // muestro los productos desde ini a Fin.
-    // Falta implementar paginación de muchos productos.
- 
-    if (!filtro.length==0){
-       // tengo un filtro.. lo aplico
-        catalogo=lista.filter(item=>item.rubro==filtro);
-    }else {
-        // no tengo filtro..Copio la lista completa
-        catalogo= lista.map((x)=> x);
-    }
+    
+        /*     if (!filtro.length==0){
+            // tengo un filtro.. lo aplico
+                catalogo=lista.filter(item=>item.rubro==filtro);
+            }else {
+                // no tengo filtro..Copio la lista completa
+                catalogo= lista.map((x)=> x);
+            } */  
+                  //    |
+                  //   \ /   optimizo con op Avanzados
+                  //    V
+    catalogo= (filtro.length==0)? lista.map((x)=> x) : lista.filter(item=>item.rubro==filtro)
+
     largoCat= catalogo.length;
     ini=(pagina-1)*10;
     fin=ini + prodPorPagina -1;
@@ -214,12 +231,17 @@ function borrarItem(item){
 }
 
 function filtrar(rubro){
-    let filtro="";
-    if (rubro==="Todos"){
-        filtro="";
-    }else {
-        filtro=rubro;
-    }
+        /*     let filtro="";
+            if (rubro==="Todos"){
+                filtro="";
+            }else {
+                filtro=rubro;
+            } */
+                  //    |
+                  //   \ /   optimizo con op Avanzados
+                  //    V
+    filtro= (rubro==="Todos") ? "" : rubro 
+
     mostrarProductos(filtro);
 }
 
@@ -236,12 +258,7 @@ const avisoCompra = document.getElementById("avisoCompra")
 const containerCarrito = document.querySelector("#items");
 const containerCarritoFooter = document.querySelector("#footer");
 const botonEnviarPedido= document.getElementById("btnEnviarPedido");
-
-// truco para generar muchos articulos y poder implementar paginacion 
-leoDB("Std",1,1);
-leoDB("Vip",10,1.10);
-leoDB("Premium",20,1.25);
-leoDB("Gold",30,1.4);
+const carritoOffcanvas = document.getElementById('carritoOffcanvas');
 
 
 // Defino eventos para botones de barra superior.
@@ -251,6 +268,13 @@ document.getElementById("btnFiltroPrm").addEventListener("click",()=>filtrar("Pr
 document.getElementById("btnFiltroGld").addEventListener("click",()=>filtrar("Gold"));
 document.getElementById("btnFiltroAll").addEventListener("click",()=>filtrar("Todos"));
 //document.getElementById("btnCarrito").addEventListener("click",()=>mostrarCarrito());
+
+// truco para generar muchos articulos y poder implementar paginacion 
+leoDB("Std",1,1);
+leoDB("Vip",10,1.10);
+leoDB("Premium",20,1.25);
+leoDB("Gold",30,1.4);
+
 // defino variables para paginación
 let filtro="";
 let pagina=1;
@@ -282,6 +306,3 @@ if (pedlocal.length!=0) {
         }
       });
 };
-
-
-
