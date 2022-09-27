@@ -10,7 +10,6 @@ class Articulo {
         this.descuento= descuento;
         this.imagen= "./imgs/"+imagen;
     }
-
 }
 
 class Carrito {
@@ -23,7 +22,7 @@ class Carrito {
     }
 
     comprar(cantidadComprada){
-        this.cantidad= this.cantidad+ cantidadComprada;
+        this.cantidad+= cantidadComprada;
         this.precioCompra= this.producto.precio;
         if (this.cantidad*this.producto.pack>=this.producto.topeDescuento){
             this.precioCompra= this.producto.precio - this.producto.precio/100*this.producto.descuento;
@@ -55,12 +54,7 @@ function crearTarjeta(producto) {
          let lineaEnCarrito = pedido.find((elem) => elem.producto.codigo == producto.codigo);
     
         lineaEnCarrito ?  lineaEnCarrito.comprar(1) : pedido.push(new Carrito(producto, 1)) ;
-        avisoCompra.innerHTML="";
-        divAvisoCompra= document.createElement("div");
-        divAvisoCompra.className="alert alert-info alert-dismissible ms-5 me-5";
-        divAvisoCompra.innerHTML=`<p>Has agregado <Strong>${producto.nombre.trim()}</strong> a tu carrito.<p>
-        <button type="button" class="btn-close position-absolute end-0 bottom-0" data-bs-dismiss="alert"></button>`;
-        avisoCompra.appendChild(divAvisoCompra);
+        Toastify({text :`Has agregado ${producto.nombre} al pedido.`, duration:2000}).showToast();
         guardarCarrito();
         mostrarCarrito();
     }
@@ -71,9 +65,7 @@ function crearTarjeta(producto) {
 function guardarCarrito() {
     localStorage.clear();
     localStorage.setItem('pedido',JSON.stringify(pedido));
-
 }
-
 
 function mostrarCarrito() {
     containerCarrito.innerHTML = "";
@@ -88,9 +80,8 @@ function mostrarCarrito() {
                 <td><input id="cantidad-producto-${elemento.producto.codigo}" type="number" value="${elemento.cantidad}" min="1" max="1000" step="1" style="width: 40px;"/></td>
                 <td>${elemento.precioCompra}</td>
                 <td>${elemento.total}</td>
-                <td><button id="eliminar-producto-${elemento.producto.codigo}" type="button" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button></td>
-                
-            `;
+                <td><button id="eliminar-producto-${elemento.producto.codigo}" type="button" class="btn btn-danger">
+                <i class="bi bi-trash-fill"></i></button></td>`;
 
             containerCarrito.append(lineasCarrito);
 
@@ -100,16 +91,16 @@ function mostrarCarrito() {
                 let vieCantidad= elemento.cantidad;
                 let cantidadComprada= ev.target.value - vieCantidad;
                 elemento.comprar(cantidadComprada);
-
                 mostrarCarrito();
             });
 
             //Agregar evento a eliminar producto
             let botonEliminarProducto = document.getElementById(`eliminar-producto-${elemento.producto.codigo}`);
             botonEliminarProducto.addEventListener('click', () => {
+                let prodEliminado= elemento.nombre;
                 let indiceEliminar =  pedido.indexOf(elemento);
                 pedido.splice(indiceEliminar,1);
-                
+                Toastify({text :`Has eliminado ${prodEliminado} del pedido.`, duration:2000}).showToast();
                 mostrarCarrito();
             });
             
@@ -149,7 +140,6 @@ function enviarPedido(ev) {
         let detalleError= (pedido.length==0)? "Tu carrito está vacío. Carga algún producto antes de enviar." : "Por favor, ingresa tus datos antes de enviar.";
         swal("Upps! Algo salio mal", detalleError, "error");
     }
-
 }
 
 function leoDB(tipo,codInicial,aumento) {
@@ -174,22 +164,10 @@ function leoDB(tipo,codInicial,aumento) {
     lista.push(new Articulo(codInicial+5,tipo, "Folletos tamaño A5 "+tipo,
         "Promociona tu negocio o emprendimientos con llaveros cinta full color.",
         1000,3500*aumento,5000,25,"entradas.svg"));
-
 }
 
 function mostrarProductos(filtro=""){
     // muestro los productos desde ini a Fin.
-    
-        /*     if (!filtro.length==0){
-            // tengo un filtro.. lo aplico
-                catalogo=lista.filter(item=>item.rubro==filtro);
-            }else {
-                // no tengo filtro..Copio la lista completa
-                catalogo= lista.map((x)=> x);
-            } */  
-                  //    |
-                  //   \ /   optimizo con op Avanzados
-                  //    V
     catalogo= (filtro.length==0)? lista.map((x)=> x) : lista.filter(item=>item.rubro==filtro)
 
     largoCat= catalogo.length;
@@ -231,15 +209,6 @@ function borrarItem(item){
 }
 
 function filtrar(rubro){
-        /*     let filtro="";
-            if (rubro==="Todos"){
-                filtro="";
-            }else {
-                filtro=rubro;
-            } */
-                  //    |
-                  //   \ /   optimizo con op Avanzados
-                  //    V
     filtro= (rubro==="Todos") ? "" : rubro 
 
     mostrarProductos(filtro);
@@ -294,12 +263,7 @@ if (pedlocal.length!=0) {
       .then((continuar) => {
         if (continuar) {
             pedlocal.forEach(ele => pedido.push(new Carrito(ele.producto, ele.cantidad)));
-            avisoCompra.innerHTML="";
-            divAvisoCompra= document.createElement("div");
-            divAvisoCompra.className="alert alert-info alert-dismissible ms-5 me-5";
-            divAvisoCompra.innerHTML=`<p>Perfecto! Ya tienes <Strong>${pedlocal.length}</strong> items en tu carrito.<p>
-            <button type="button" class="btn-close position-absolute end-0 bottom-0" data-bs-dismiss="alert"></button>`;
-            avisoCompra.appendChild(divAvisoCompra);
+            Toastify({text :`Perfecto! Ya tienes ${pedlocal.length} items en tu carrito.`, duration:2000}).showToast();
             mostrarCarrito();
         } else {
           localStorage.clear();
