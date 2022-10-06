@@ -1,14 +1,14 @@
 class Articulo {
-    constructor (codigo,rubro, nombre, descripcion, pack, precio, topeDescuento, descuento, imagen) {
-        this.codigo= codigo;
-        this.rubro= rubro;
-        this.nombre= nombre;
-        this.descripcion=descripcion;
-        this.pack= pack;
-        this.precio= parseInt(precio.toFixed(0));
-        this.topeDescuento= topeDescuento;
-        this.descuento= descuento;
-        this.imagen= "./imgs/"+imagen;
+    constructor (producto) {
+        this.codigo= producto.codigo;
+        this.rubro= producto.rubro;
+        this.nombre= producto.nombre;
+        this.descripcion= producto.descripcion;
+        this.pack= producto.pack;
+        this.precio= parseInt(producto.precio.toFixed(0));
+        this.topeDescuento= producto.topeDescuento;
+        this.descuento= producto.descuento;
+        this.imagen= "./imgs/"+producto.imagen; 
     }
 }
 
@@ -103,7 +103,6 @@ function mostrarCarrito() {
                 Toastify({text :`Has eliminado ${prodEliminado} del pedido.`, duration:2000}).showToast();
                 mostrarCarrito();
             });
-            
         }
     );
     guardarCarrito();
@@ -118,7 +117,6 @@ function mostrarCarrito() {
 }
 
 function vaciarCarrito() {
-    console.log("entre a vaciar");
     pedido.length=0;
     localStorage.clear();
     mostrarCarrito();
@@ -129,45 +127,19 @@ function vaciarCarrito() {
 
 function enviarPedido(ev) {
     ev.preventDefault();
-    console.log("entre a al funcion");
     if (pedido.length>0 && document.getElementById("pedidoMail").value) {
         // tengo pedido y tengo mail.  aca envio el mail.. (algun dia!!)
-        console.log("entre a enviar");
         vaciarCarrito();
         swal("Pedido enviado!", "Muchas Gracias! Muy pronto le contactaremos", "success");
     }else{
-        console.log("entre a error");
         let detalleError= (pedido.length==0)? "Tu carrito está vacío. Carga algún producto antes de enviar." : "Por favor, ingresa tus datos antes de enviar.";
         swal("Upps! Algo salio mal", detalleError, "error");
     }
 }
 
-function leoDB(tipo,codInicial,aumento) {
-
-    // Creo la lista de Productos.. En un futuro se leerán  de una DB
- 
-    lista.push(new Articulo(codInicial, tipo, "Pulseras para eventos "+tipo,
-        "Pulseras plásticas para eventos, a prueba de agua. Podes personalizarlas a tu gusto.",
-        100,1200*aumento,500,20,"pulseras.svg"));
-    lista.push(new Articulo(codInicial+1,tipo, "Llaveros cinta "+tipo,
-    "Promociona tu negocio o emprendimientos con llaveros cinta full color.",
-        50,1500*aumento,200,10,"llaveros.svg"));
-    lista.push(new Articulo(codInicial+2,tipo, "Entradas para eventos "+tipo,
-        "Entradas para eventos a todo color.",
-        1000,1600*aumento,3000,20,"entradas.svg"));
-    lista.push(new Articulo(codInicial+3,tipo, "Tazas personalizadas "+tipo,
-        "Tazas para promoción. Forma y color a elección",
-        2,3000*aumento,10,30,"tazas.svg"));
-    lista.push(new Articulo(codInicial+4,tipo, "Tarjetas Personales "+tipo,
-        "Pack de 120 tarjetas personales a precio IN-CRE-I-BLE!",
-        120,450*aumento,1000,30,"tarjetas.svg"));
-    lista.push(new Articulo(codInicial+5,tipo, "Folletos tamaño A5 "+tipo,
-        "Promociona tu negocio o emprendimientos con llaveros cinta full color.",
-        1000,3500*aumento,5000,25,"entradas.svg"));
-}
-
 function mostrarProductos(filtro=""){
     // muestro los productos desde ini a Fin.
+    console.log(filtro.length);
     catalogo= (filtro.length==0)? lista.map((x)=> x) : lista.filter(item=>item.rubro==filtro)
 
     largoCat= catalogo.length;
@@ -194,7 +166,6 @@ function mostrarProductos(filtro=""){
 
     document.getElementById("botonAnterior").addEventListener("click",()=>{cambiarPagina(-1)});
     document.getElementById("botonSiguiente").addEventListener("click",()=>{cambiarPagina(+1)});
-
 }
 
 function cambiarPagina(cambio){
@@ -214,12 +185,9 @@ function filtrar(rubro){
     mostrarProductos(filtro);
 }
 
-// Defino array para lista de productos a mostrar
-const lista= [];
-// defino array para subconjunto de lista a mostrar (si aplico filtros)
-let catalogo=[];
-// Defino array para pedido.
-const pedido=[];
+const lista= [];   // Defino array para lista de productos a mostrar
+let catalogo=[];   // defino array para subconjunto de lista a mostrar (si aplico filtros)
+const pedido=[];   // Defino array para pedido.
 
 // elementos HTML
 const listaCatalogo = document.getElementById('listaProductos');
@@ -229,30 +197,37 @@ const containerCarritoFooter = document.querySelector("#footer");
 const botonEnviarPedido= document.getElementById("btnEnviarPedido");
 const carritoOffcanvas = document.getElementById('carritoOffcanvas');
 
-
 // Defino eventos para botones de barra superior.
-document.getElementById("btnFiltroStd").addEventListener("click",()=>filtrar("Std"));
-document.getElementById("btnFiltroVip").addEventListener("click",()=>filtrar("Vip"));
-document.getElementById("btnFiltroPrm").addEventListener("click",()=>filtrar("Premium"));
-document.getElementById("btnFiltroGld").addEventListener("click",()=>filtrar("Gold"));
-document.getElementById("btnFiltroAll").addEventListener("click",()=>filtrar("Todos"));
+document.getElementById("btnPulseras").addEventListener("click",()=>filtrar("Pulseras"));
+document.getElementById("btnLlaveros").addEventListener("click",()=>filtrar("Llaveros"));
+document.getElementById("btnEntradas").addEventListener("click",()=>filtrar("Entradas"));
+/* document.getElementById("btnFiltroGld").addEventListener("click",()=>filtrar("Gold")); */
+document.getElementById("btnTodos").addEventListener("click",()=>filtrar("Todos"));
 //document.getElementById("btnCarrito").addEventListener("click",()=>mostrarCarrito());
 
-// truco para generar muchos articulos y poder implementar paginacion 
-leoDB("Std",1,1);
-leoDB("Vip",10,1.10);
-leoDB("Premium",20,1.25);
-leoDB("Gold",30,1.4);
+// Leo los productos desde productos.json y los cargo al array lista 
+
+    fetch("./productos.json")
+    .then(response =>response.json())
+    .then(data => {
+        data.forEach(producto => { 
+            lista.push(new Articulo(producto));
+        })
+        mostrarProductos("");
+    })
+    .catch(error => {
+    listaCatalogo.innerHTML ="<p>Diantres!!  Algo ha fallado... </p><p>"+error+"</p";
+    })
+//mostrarProductos(""); 
 
 // defino variables para paginación
 let filtro="";
 let pagina=1;
 let prodPorPagina= 10;
 
-mostrarProductos(""); 
+
 
 const pedlocal=JSON.parse(localStorage.getItem('pedido')) || [];
-
 if (pedlocal.length!=0) {
     swal({
         title: "Continuamos la compra?",
@@ -270,3 +245,4 @@ if (pedlocal.length!=0) {
         }
       });
 };
+

@@ -48,17 +48,38 @@
     <!-- Fin header-->
 
     <main class="container-lg" >
-            <section id="botonesFiltro">
-                Mostrar Rubro:  
-                <button class="botonFiltro" id="btnFiltroStd" >Standard</button>
-                <button class="botonFiltro" id="btnFiltroVip" >Vip</button>
-                <button class="botonFiltro" id="btnFiltroPrm" >Premium</button>
-                <button class="botonFiltro" id="btnFiltroGld" >Gold</button>
-                <button class="botonFiltro" id="btnFiltroAll" >Todos</button>
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" aria-controls="carritoOffcanvas">
+
+        <div class="collapse navbar-collapse  justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0 ">
+                <li class="rub-item">
+                    <div class="rub-link" href="index.html">Menu1</a>
+                </li>
+                <li class="rub-item">
+                    <a class="nav-link" href="index.html">Menu2</a>
+                </li>
+                <li class="rub-item">
+                    <a class="nav-link" href="index.html">Menu3</a>
+                </li>
+                <li class="rub-item">
+                    <a class="nav-link" href="index.html">Menu4</a>
+                </li>
+            </ul>
+        </div>
+
+            <section id="barraSuperior">
+                <section id="botonesFiltro">
+                    <button class="botonFiltro" id="btnTodos" >Todos</button>
+                    <button class="botonFiltro" id="btnPulseras" >Pulseras</button>
+                    <button class="botonFiltro" id="btnLlaveros" >Llaveros</button>
+                    <button class="botonFiltro" id="btnEntradas" >Entradas</button>
+                </section>
+                <section id="botonCarrito">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" aria-controls="carritoOffcanvas">
                     Ver Carrito <i class="bi bi-cart4"></i>
-                  </button>
-            </section>
+                    </button>
+                </section>
+            </section>    
+            
             <section id="avisoCompra">
                 <!-- Esta seccion se completa desde JS -->
             </section>

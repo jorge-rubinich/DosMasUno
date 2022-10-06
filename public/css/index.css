@@ -109,7 +109,7 @@ html {
   color: #fff;
   text-shadow: 1px 1px 1px #000;
   border-radius: 10px;
-  background-color: #0000dc;
+  background-color: #2b66c0;
   background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
   box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
   width: 130px;
@@ -159,15 +159,24 @@ html {
 .itemCantidad, .itemPrecio {
   align-content: right; }
 
-#botonesFiltro {
-  background-color: #c3dfdf;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  padding: 5px; }
-
 .offcanvas.offcanvas-end {
   top: 0;
   right: 0;
   width: 600px;
   border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
   transform: translateX(100%); }
+
+#barraSuperior {
+  display: flex;
+  justify-content: space-between;
+  background-color: #c3dfdf;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px; }
+  #barraSuperior #botonesFiltro {
+    background-color: #c3dfdf; }
+  #barraSuperior #botonCarrito {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    max-height: 50px; }

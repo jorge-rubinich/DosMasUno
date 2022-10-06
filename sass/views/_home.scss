@@ -48,7 +48,7 @@
     color: #fff;
     text-shadow: 1px 1px 1px #000;
     border-radius: 10px;
-    background-color: rgba(0, 0, 220, 1);
+    background-color: rgb(43, 102, 192);
     background-image: linear-gradient(to top left,
                                       rgba(0, 0, 0, .2),
                                       rgba(0, 0, 0, .2) 30%,
@@ -114,13 +114,6 @@
     align-content: right;
 }
 
-#botonesFiltro {
-    background-color: rgb(195, 223, 223);
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-
-}
 
 .offcanvas.offcanvas-end {
     top: 0;
@@ -129,4 +122,23 @@
     border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
     transform: translateX(100%);
 
+}
+
+#barraSuperior{
+    display: flex;
+    justify-content: space-between;
+    background-color: #c3dfdf;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px; 
+    #botonesFiltro {
+        background-color: rgb(195, 223, 223);
+    }
+    
+    #botonCarrito {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      max-height: 50px;
+    }
 }
