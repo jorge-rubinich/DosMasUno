@@ -123,7 +123,7 @@ html {
   align-items: end; }
 
 .botonFiltro {
-  width: 100px;
+  width: 120px;
   margin: 0px 10px; }
 
 .btnEliminarx {
@@ -180,3 +180,9 @@ html {
     flex-direction: row;
     justify-content: flex-end;
     max-height: 50px; }
+
+.bg-nav-img {
+  background-image: url(/imgs/logogrande.jpg);
+  background-size: 300;
+  background-repeat: repeat;
+  background-position: left; }

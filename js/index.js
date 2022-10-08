@@ -159,7 +159,7 @@ function mostrarProductos(filtro=""){
     catalogoFooter.innerHTML= `
     <div class="col-sm-3"></div>
     <div class="btn btn-dark col-sm-2 text-center ${(pagina>1)? " " : "disabled"}" id="botonAnterior">pagina anterior</div>
-    <div class="col-sm-2 text-center align-middle">de ${ini+1} a ${fin>largoCat?largoCat:fin+1}</div>
+    <div class="col-sm-2 text-center align-middle bg-secondary text-warning font-weight-bold">de ${ini+1} a ${fin>largoCat?largoCat:fin+1}</div>
     <div class="btn btn-dark col-sm-2 text-center ${(largoCat>fin)? " " : "disabled"}" id="botonSiguiente">pagina siguiente</div>
     <div class="col-sm-3"></div>`
     listaCatalogo.appendChild(catalogoFooter);
@@ -201,7 +201,7 @@ const carritoOffcanvas = document.getElementById('carritoOffcanvas');
 document.getElementById("btnPulseras").addEventListener("click",()=>filtrar("Pulseras"));
 document.getElementById("btnLlaveros").addEventListener("click",()=>filtrar("Llaveros"));
 document.getElementById("btnEntradas").addEventListener("click",()=>filtrar("Entradas"));
-/* document.getElementById("btnFiltroGld").addEventListener("click",()=>filtrar("Gold")); */
+document.getElementById("btnPromo").addEventListener("click",()=>filtrar("Promoción")); 
 document.getElementById("btnTodos").addEventListener("click",()=>filtrar("Todos"));
 //document.getElementById("btnCarrito").addEventListener("click",()=>mostrarCarrito());
 

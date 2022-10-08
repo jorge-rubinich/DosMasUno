@@ -78,5 +78,35 @@
     "precio": 800 ,
     "topeDescuento": 3000,
     "descuento": 10, 
-    "imagen": "anticipadas.svg"}
+    "imagen": "anticipadas.svg"},
+   {
+    "codigo": 9, 
+    "rubro": "Promoción",
+    "nombre": "Tazas impresas", 
+    "descripcion": "Obsequios especiales para clientes especiales.",
+    "pack": 5,
+    "precio": 6000,
+    "topeDescuento": 10,
+    "descuento": 15, 
+    "imagen": "tazas.svg"},
+    {
+    "codigo": 10, 
+    "rubro": "Promoción",
+    "nombre": "Bolsas de tela", 
+    "descripcion": "Que tu negocio recorra la ciudad.",
+    "pack": 5,
+    "precio": 6000,
+    "topeDescuento": 10,
+    "descuento": 15, 
+    "imagen": "bolsas.svg"},
+    {
+    "codigo": 11, 
+    "rubro": "Promoción",
+    "nombre": "Folletos", 
+    "descripcion": "Folletos A4 a todo color.",
+    "pack": 1000,
+    "precio": 700,
+    "topeDescuento": 10000,
+    "descuento": 25, 
+    "imagen": "folletos.svg"}
 ]
