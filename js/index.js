@@ -108,7 +108,7 @@ function mostrarCarrito() {
             //Agregar evento a eliminar producto
             let botonEliminarProducto = document.getElementById(`eliminar-producto-${elemento.producto.codigo}`);
             botonEliminarProducto.addEventListener('click', () => {
-                let prodEliminado= elemento.nombre;
+                let prodEliminado= elemento.producto.nombre;
                 let indiceEliminar =  pedido.indexOf(elemento);
                 pedido.splice(indiceEliminar,1);
                 Toastify({text :`Has eliminado ${prodEliminado} del pedido.`, duration:2000}).showToast();
