@@ -131,25 +131,30 @@ html {
   height: 20px;
   align-items: end; }
 
-#pedidoContainer {
-  display: flex;
-  gap: 5px; }
-  #pedidoContainer #pedido {
-    width: 600px;
-    align-self: center;
-    margin: auto; }
-    #pedidoContainer #pedido #titulo {
-      background-color: #333745;
-      color: #C7EFCF;
-      text-align: center;
-      font-family: "Libre Baskerville", serif; }
-    #pedidoContainer #pedido #cuerpo {
-      background-color: #C7EFCF;
-      align-items: center; }
-      #pedidoContainer #pedido #cuerpo #tituloPedido {
-        background-color: blue;
-        color: yellowgreen; }
+/* #pedidoContainer {
+    display: flex;
+    gap: 5px;
+    #pedido {
+        width: 600px;
+        align-self: center;
+        margin: auto;
+        #titulo {
+            background-color: $color-primary;
+            color: $color-base;
+            text-align: center;
+            font-family: $font-title;
 
+        }
+        #cuerpo {
+            background-color: $color-base;
+            align-items: center;
+            #tituloPedido {
+                background-color: blue;
+                color: yellowgreen;
+            }
+        }
+    }
+} */
 .itemPedido {
   max-width: 700;
   padding-left: 2px;
@@ -186,3 +191,37 @@ html {
   background-size: 300;
   background-repeat: repeat;
   background-position: left; }
+
+.itemCarrito {
+  display: flex;
+  flex-direction: row;
+  border: solid 2px;
+  border-color: blue;
+  padding: 5px;
+  margin: 5px;
+  flex-grow: 1; }
+  .itemCarrito .itemCarritoImg {
+    display: flex;
+    align-items: center; }
+    .itemCarrito .itemCarritoImg img {
+      max-width: 60px; }
+  .itemCarrito .itemCarritoDet {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; }
+    .itemCarrito .itemCarritoDet .itemCarritoDetNom {
+      font-style: "Roboto", sans-serif;
+      font-size: 20px; }
+    .itemCarrito .itemCarritoDet .itemCarritoCompra {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: aquamarine;
+      width: 100%;
+      align-items: center; }
+      .itemCarrito .itemCarritoDet .itemCarritoCompra .itemCompraDato {
+        flex-grow: 1;
+        justify-content: end; }
+      .itemCarrito .itemCarritoDet .itemCarritoCompra .itemCarritoCantidad {
+        padding-left: 10px; }

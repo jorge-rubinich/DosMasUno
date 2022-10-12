@@ -68,21 +68,30 @@ function guardarCarrito() {
 }
 
 function mostrarCarrito() {
+    let detPedido="";
     containerCarrito.innerHTML = "";
     totalCompra= pedido.reduce( (acum,elemento)=> acum+ elemento.total,0);
-
     pedido.forEach(
         (elemento) => {
             let lineasCarrito= document.createElement("tr");
-            //<td>${elemento.producto.codigo}</td>
-            lineasCarrito.innerHTML = `
-                <td>${elemento.producto.nombre}</td>
-                <td><input id="cantidad-producto-${elemento.producto.codigo}" type="number" value="${elemento.cantidad}" min="1" max="1000" step="1" style="width: 40px;"/></td>
-                <td>${elemento.precioCompra}</td>
-                <td>${elemento.total}</td>
-                <td><button id="eliminar-producto-${elemento.producto.codigo}" type="button" class="btn btn-danger">
-                <i class="bi bi-trash-fill"></i></button></td>`;
 
+            lineasCarrito.innerHTML = `
+            <div class="itemCarrito">
+                <div class="itemCarritoImg"><img src="${elemento.producto.imagen}"></div>
+                <div class="itemCarritoDet">
+                    <div class="itemCarritoDetNom"><p>${elemento.producto.nombre}</p></div>
+                    <div class="itemCarritoCompra">
+                        <div class="itemCompraDato itemCarritoCantidad"><input id="cantidad-producto-${elemento.producto.codigo}" type="number" value="${elemento.cantidad}" min="1" max="1000" step="1" style="width: 40px;"/>Pack x ${elemento.producto.pack} Un.</div>
+                        <div class="itemCompraDato itemCarritoPrecio">$${elemento.precioCompra}</div>
+                        <div class="itemCompraDato itemCarritoTotal">$${elemento.total}</div>
+                        <div class="itemCompraDato"><button id="eliminar-producto-${elemento.producto.codigo}" type="button" class="btn btn-danger">
+                            <i class="bi bi-trash-fill"></i></button></div>
+                    </div>
+                </div> 
+            </div>`;    
+
+            detPedido=detPedido+`
+            ${elemento.cantidad} ${elemento.producto.nombre} (id ${elemento.producto.codigo}) x $${elemento.precioCompra} = $${elemento.total}`;
             containerCarrito.append(lineasCarrito);
 
             //Agregar evento para 'escuchar' el cambio de cantidad en carrito
@@ -93,6 +102,7 @@ function mostrarCarrito() {
                 elemento.comprar(cantidadComprada);
                 mostrarCarrito();
             });
+
 
             //Agregar evento a eliminar producto
             let botonEliminarProducto = document.getElementById(`eliminar-producto-${elemento.producto.codigo}`);
@@ -105,6 +115,7 @@ function mostrarCarrito() {
             });
         }
     );
+    pedidoDetalle.value=detPedido;
     guardarCarrito();
 
     if(pedido.length == 0) {
@@ -120,17 +131,29 @@ function vaciarCarrito() {
     pedido.length=0;
     localStorage.clear();
     mostrarCarrito();
-    avisoCompra.innerHTML="";
     botonEnviarPedido.removeEventListener("click",enviarPedido);
     carritoOffcanvas.hide;
 }
 
 function enviarPedido(ev) {
     ev.preventDefault();
-    if (pedido.length>0 && document.getElementById("pedidoMail").value) {
+    if (pedido.length>0 && document.getElementById("pedidoEmail").value) {
+
         // tengo pedido y tengo mail.  aca envio el mail.. (algun dia!!)
-        vaciarCarrito();
-        swal("Pedido enviado!", "Muchas Gracias! Muy pronto le contactaremos", "success");
+        
+        botonEnviarPedido.value = 'Enviando...';
+        const serviceID = 'default_service';
+        const templateID = 'template_5lll6eb';
+         emailjs.sendForm(serviceID, templateID, formPedido)
+            .then(() => {
+                botonEnviarPedido.value = 'Enviar Pedido';
+                vaciarCarrito();
+                swal("Pedido enviado!", "Muchas Gracias! Muy pronto le contactaremos", "success");
+            }, (err) => {
+                botonEnviarPedido.value = 'Enviar Pedido';
+                Toastify({text :JSON.stringify(err), duration:3000}).showToast();
+                });
+
     }else{
         let detalleError= (pedido.length==0)? "Tu carrito está vacío. Carga algún producto antes de enviar." : "Por favor, ingresa tus datos antes de enviar.";
         swal("Upps! Algo salio mal", detalleError, "error");
@@ -191,11 +214,13 @@ const pedido=[];   // Defino array para pedido.
 
 // elementos HTML
 const listaCatalogo = document.getElementById('listaProductos');
-const avisoCompra = document.getElementById("avisoCompra")
 const containerCarrito = document.querySelector("#items");
 const containerCarritoFooter = document.querySelector("#footer");
 const botonEnviarPedido= document.getElementById("btnEnviarPedido");
 const carritoOffcanvas = document.getElementById('carritoOffcanvas');
+const pedidoDetalle = document.getElementById('pedidoDetalle');
+const formPedido=document.getElementById('formPedido');
+pedidoDetalle.value="";
 
 // Defino eventos para botones de barra superior.
 document.getElementById("btnPulseras").addEventListener("click",()=>filtrar("Pulseras"));
@@ -224,8 +249,6 @@ document.getElementById("btnTodos").addEventListener("click",()=>filtrar("Todos"
 let filtro="";
 let pagina=1;
 let prodPorPagina= 10;
-
-
 
 const pedlocal=JSON.parse(localStorage.getItem('pedido')) || [];
 if (pedlocal.length!=0) {

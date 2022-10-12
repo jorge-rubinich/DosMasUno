@@ -76,14 +76,10 @@
                 </section>
                 <section id="botonCarrito">
                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" aria-controls="carritoOffcanvas">
-                    Ver Carrito <i class="bi bi-cart4"></i>
+                         Carrito <i class="bi bi-cart4"></i>
                     </button>
                 </section>
             </section>    
-
-            <section id="avisoCompra">
-                <!-- Esta seccion se completa desde JS -->
-            </section>
 
             <section id="listaProductos" class="row justify-content-center  mt-3 mb-3">
                   <!-- Esta seccion se completa desde JS -->
@@ -92,12 +88,12 @@
             <!-- Canvas del carrito de compras -->
             <div class="offcanvas offcanvas-end bg-info" tabindex="-1" id="carritoOffcanvas" aria-labelledby="carritoOffcanvasLabel">
                 <div class="offcanvas-header  bg-primary">
-                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">Carrito de Compras</h5>
+                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">Tu Pedido</h5>
                   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <table class="table">
-                        <thead>
+                     <table class="table">
+                       <!-- <thead>
                             <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Cant</th>
@@ -106,7 +102,10 @@
                             <th></th>
                             </tr>
                         </thead>
-                        <tbody id="items"></tbody>
+                        <tbody>
+                        </tbody> -->
+                        <tbody id="items">
+                        </tbody>
                         <tfoot>
                             <tr id="footer">
                             <th scope="row" colspan="6">Tu carrito está vacío!</th>
@@ -124,15 +123,18 @@
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    <form class="px-4 py-3">
+                                    <form class="px-4 py-3" id="formPedido">
                                         <div class="form-group">
                                             <label for="pedidoEmail">Correo electrónico</label>
-                                            <input type="email" class="form-control" id="pedidoMail" placeholder="email@example.com">
+                                            <input type="email" class="form-control" id="pedidoEmail" name= "mail" placeholder="email@example.com">
                                         </div>
                                         <div class="form-group">
                                             <label for="pedidoNombre">Apellido y Nombre </label>
-                                            <input type="text" class="form-control" id="pedidoNombre" placeholder="Apellido y Nombre">
+                                            <input type="text" class="form-control" id="pedidoNombre" name="name" placeholder="Apellido y Nombre">
                                         </div>
+                                        <div class="form-group">
+                                            <input type="hidden" id="pedidoDetalle" name="mensaje"  value="">
+                                        </div>               
                                     </form>
                                     <button id="btnEnviarPedido" class="btn btn-primary btnEnviarPedido">Enviar Pedido</button>
                                 </div>
@@ -163,5 +165,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./js/index.js">  </script>
+    <script type="text/javascript"   src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">  emailjs.init('SIen3zV02IFoBDxem')</script>
 </body>
 </html>
