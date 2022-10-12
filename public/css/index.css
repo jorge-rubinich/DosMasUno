@@ -131,30 +131,6 @@ html {
   height: 20px;
   align-items: end; }
 
-/* #pedidoContainer {
-    display: flex;
-    gap: 5px;
-    #pedido {
-        width: 600px;
-        align-self: center;
-        margin: auto;
-        #titulo {
-            background-color: $color-primary;
-            color: $color-base;
-            text-align: center;
-            font-family: $font-title;
-
-        }
-        #cuerpo {
-            background-color: $color-base;
-            align-items: center;
-            #tituloPedido {
-                background-color: blue;
-                color: yellowgreen;
-            }
-        }
-    }
-} */
 .itemPedido {
   max-width: 700;
   padding-left: 2px;
@@ -184,7 +160,17 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    max-height: 50px; }
+    max-height: 50px;
+    /*             #contadorCarrito {
+                width: 20px;
+                height: 20px;
+                color: #f8fafb;
+                font-size: 15px;
+                padding: 1px 8px 8px 7px;
+                border-radius: 60%;
+                background-color: #31cce7d0;
+                margin-left: 0px;
+            } */ }
 
 .bg-nav-img {
   background-image: url(/imgs/logogrande.jpg);

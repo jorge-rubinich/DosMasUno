@@ -69,10 +69,12 @@ function guardarCarrito() {
 
 function mostrarCarrito() {
     let detPedido="";
+    let cuentaCarrito=0;
     containerCarrito.innerHTML = "";
     totalCompra= pedido.reduce( (acum,elemento)=> acum+ elemento.total,0);
     pedido.forEach(
         (elemento) => {
+            cuentaCarrito+=1
             let lineasCarrito= document.createElement("tr");
 
             lineasCarrito.innerHTML = `
@@ -115,6 +117,7 @@ function mostrarCarrito() {
         }
     );
     pedidoDetalle.value=detPedido;
+    contadorCarrito.innerHTML= cuentaCarrito==0? "" : `[${cuentaCarrito}]`;
     guardarCarrito();
 
     if(pedido.length == 0) {
@@ -219,6 +222,7 @@ const botonEnviarPedido= document.getElementById("btnEnviarPedido");
 const carritoOffcanvas = document.getElementById('carritoOffcanvas');
 const pedidoDetalle = document.getElementById('pedidoDetalle');
 const formPedido=document.getElementById('formPedido');
+const contadorCarrito=document.getElementById('contadorCarrito');
 pedidoDetalle.value="";
 
 // Defino eventos para botones de barra superior.
