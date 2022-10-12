@@ -6,7 +6,7 @@
     "descripcion": "Pulseras plásticas para eventos, a prueba de agua. Podes personalizarlas a tu gusto.",
     "pack": 100,
     "precio": 1200 ,
-    "topeDescuento": 500,
+    "topeDescuento": 400,
     "descuento": 20, 
     "imagen": "pulseras_plasticas.svg"},
     {
@@ -16,7 +16,7 @@
     "descripcion": "pulseras para todo tipo de eventos. Ideales y económicas para control de acceso.",
     "pack": 100,
     "precio": 1000 ,
-    "topeDescuento": 500,
+    "topeDescuento": 700,
     "descuento": 20, 
     "imagen": "pulseras.svg"},
     {
@@ -26,7 +26,7 @@
     "descripcion": "Muy livianas, resistentes a estiramientos y roturas, impermeables y cómodas.",
     "pack": 100,
     "precio": 800 ,
-    "topeDescuento": 500,
+    "topeDescuento": 1000,
     "descuento": 20, 
     "imagen": "pulseras_tyvek.svg"},
     {
@@ -108,5 +108,16 @@
     "precio": 700,
     "topeDescuento": 10000,
     "descuento": 25, 
-    "imagen": "folletos.svg"}
+    "imagen": "folletos.svg"},
+    {
+        "codigo": 12, 
+        "rubro": "Promoción",
+        "nombre": "Tarjetas Personales", 
+        "descripcion": "Tus tarjetas a todo color.",
+        "pack": 100,
+        "precio": 500,
+        "topeDescuento": 400,
+        "descuento": 20, 
+        "imagen": "tarjetas.svg"}
+        
 ]

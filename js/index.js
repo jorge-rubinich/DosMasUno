@@ -103,7 +103,6 @@ function mostrarCarrito() {
                 mostrarCarrito();
             });
 
-
             //Agregar evento a eliminar producto
             let botonEliminarProducto = document.getElementById(`eliminar-producto-${elemento.producto.codigo}`);
             botonEliminarProducto.addEventListener('click', () => {
@@ -148,7 +147,7 @@ function enviarPedido(ev) {
             .then(() => {
                 botonEnviarPedido.value = 'Enviar Pedido';
                 vaciarCarrito();
-                swal("Pedido enviado!", "Muchas Gracias! Muy pronto le contactaremos", "success");
+                swal("Verfique su correo electrónico!", "Le hemos enviado un mail. Respóndalo y nos comunicaremos a la brevedad para iniciar su trabajo.", "success");
             }, (err) => {
                 botonEnviarPedido.value = 'Enviar Pedido';
                 Toastify({text :JSON.stringify(err), duration:3000}).showToast();
