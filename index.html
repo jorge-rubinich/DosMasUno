@@ -49,91 +49,73 @@
 
     <main class="container-lg" >
 
-        <div class="collapse navbar-collapse  justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0 ">
-                <li class="rub-item">
-                    <div class="rub-link" href="index.html">Menu1</a>
-                </li>
-                <li class="rub-item">
-                    <a class="nav-link" href="index.html">Menu2</a>
-                </li>
-                <li class="rub-item">
-                    <a class="nav-link" href="index.html">Menu3</a>
-                </li>
-                <li class="rub-item">
-                    <a class="nav-link" href="index.html">Menu4</a>
-                </li>
-            </ul>
-        </div>
-
-            <section id="barraSuperior">
-                <section id="botonesFiltro">
-                    <button class="botonFiltro" id="btnTodos" >Todos</button>
-                    <button class="botonFiltro" id="btnPulseras" >Pulseras</button>
-                    <button class="botonFiltro" id="btnLlaveros" >Llaveros</button>
-                    <button class="botonFiltro" id="btnEntradas" >Entradas</button>
-                    <button class="botonFiltro" id="btnPromo" >Promoción</button>
-                </section>
-                <section id="botonCarrito">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" aria-controls="carritoOffcanvas">
-                        <i class="bi bi-cart4"></i><span id="contadorCarrito"></span>
-                    </button>
-                </section>
-            </section>    
-
-            <section id="listaProductos" class="row justify-content-center  mt-3 mb-3">
-                  <!-- Esta seccion se completa desde JS -->
+        <section id="barraSuperior">
+            <section id="botonesFiltro">
+                <button class="botonFiltro" id="btnTodos" >Todos</button>
+                <button class="botonFiltro" id="btnPulseras" >Pulseras</button>
+                <button class="botonFiltro" id="btnLlaveros" >Llaveros</button>
+                <button class="botonFiltro" id="btnEntradas" >Entradas</button>
+                <button class="botonFiltro" id="btnPromo" >Promoción</button>
             </section>
+            <section id="botonCarrito">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" aria-controls="carritoOffcanvas">
+                    <i class="bi bi-cart4"></i><span id="contadorCarrito"></span>
+                </button>
+            </section>
+        </section>    
 
-            <!-- Canvas del carrito de compras -->
-            <div class="offcanvas offcanvas-end bg-info" tabindex="-1" id="carritoOffcanvas" aria-labelledby="carritoOffcanvasLabel">
-                <div class="offcanvas-header  bg-primary">
-                  <h5 class="offcanvas-title" id="offcanvasExampleLabel">Tu Pedido</h5>
-                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                     <table class="table">
-    
-                        <tbody id="items">
-                        </tbody>
-                        <tfoot>
-                            <tr id="footer">
-                            <th scope="row" colspan="6">Tu carrito está vacío!</th>
-                            </tr>
-  
-                        </tfoot>
-                    </table>
+        <section id="listaProductos" class="row justify-content-center  mt-3 mb-3">
+                <!-- Esta seccion se completa desde JS -->
+        </section>
 
-                    <div class="accordion" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Enviar Pedido.
-                            </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <form class="px-4 py-3" id="formPedido">
-                                        <div class="form-group">
-                                            <label for="pedidoEmail">Correo electrónico</label>
-                                            <input type="email" class="form-control" id="pedidoEmail" name= "mail" placeholder="email@example.com">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pedidoNombre">Apellido y Nombre </label>
-                                            <input type="text" class="form-control" id="pedidoNombre" name="name" placeholder="Apellido y Nombre">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="hidden" id="pedidoDetalle" name="mensaje"  value="">
-                                        </div>               
-                                    </form>
-                                    <button id="btnEnviarPedido" class="btn btn-primary btnEnviarPedido">Enviar Pedido</button>
-                                </div>
+        <!-- Canvas del carrito de compras -->
+        <div class="offcanvas offcanvas-end bg-info" tabindex="-1" id="carritoOffcanvas" aria-labelledby="carritoOffcanvasLabel">
+            <div class="offcanvas-header  bg-primary">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Tu Pedido</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                    <table class="table">
+
+                    <tbody id="items">
+                    </tbody>
+                    <tfoot>
+                        <tr id="footer">
+                        <th scope="row" colspan="6">Tu carrito está vacío!</th>
+                        </tr>
+
+                    </tfoot>
+                </table>
+
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Enviar Pedido.
+                        </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <form class="px-4 py-3" id="formPedido">
+                                    <div class="form-group">
+                                        <label for="pedidoEmail">Correo electrónico</label>
+                                        <input type="email" class="form-control" id="pedidoEmail" name= "mail" placeholder="email@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pedidoNombre">Apellido y Nombre </label>
+                                        <input type="text" class="form-control" id="pedidoNombre" name="name" placeholder="Apellido y Nombre">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" id="pedidoDetalle" name="mensaje"  value="">
+                                    </div>               
+                                </form>
+                                <button id="btnEnviarPedido" class="btn btn-primary btnEnviarPedido">Enviar Pedido</button>
                             </div>
                         </div>
                     </div>
                 </div>
-              </div>
-
+            </div>
+        </div>
 
         <footer>
 
